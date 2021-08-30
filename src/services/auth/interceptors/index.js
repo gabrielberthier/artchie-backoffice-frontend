@@ -1,10 +1,20 @@
 import { client } from "src/services/http-base";
-import { interceptRequest } from "./request-interceptors";
-import { onError, onRenew } from "./response-interceptor";
+import { Store } from "vuex";
+import { interceptRequestFactory } from "./request-interceptors";
+import {
+  responseInterceptorFactory,
+  onErrorInterceptor,
+} from "./response-interceptor";
 
-export function intercept() {
-  client.interceptors.response.use(onRenew, onError);
-  client.interceptors.request.use(interceptRequest, (error) =>
+/**
+ * @param {Store}
+ */
+export function intercept(store) {
+  client.interceptors.response.use(
+    responseInterceptorFactory(store),
+    onErrorInterceptor(store)
+  );
+  client.interceptors.request.use(interceptRequestFactory(store), (error) =>
     Promise.reject(error)
   );
 }

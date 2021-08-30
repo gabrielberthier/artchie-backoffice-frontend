@@ -1,21 +1,23 @@
-import {
-  createNamespacedHelpers,
-  useGetters,
-} from "vuex-composition-helpers/dist";
-const { useState, useActions } = createNamespacedHelpers("auth"); // specific module name
+import { Store } from "vuex";
 
 /**
  *
- * @param {import("axios").AxiosRequestConfig} config
- *
- * @returns {import("axios").AxiosRequestConfig}
+ * @param {Store} store
+ * @returns {CallableFunction}
  */
-export function interceptRequest(config) {
-  const { verifyAccess } = useActions(["verifyAccess"]);
-  verifyAccess.then((result) => {
-    if (!result) {
-      location.reload(true);
-    }
-  });
-  return config;
+export function interceptRequestFactory(store) {
+  /**
+   *
+   * @param {import("axios").AxiosRequestConfig} config
+   *
+   * @returns {import("axios").AxiosRequestConfig}
+   */
+  return (config) => {
+    store.dispatch("auth/verifyAccess").then((result) => {
+      if (!result) {
+        location.reload(true);
+      }
+    });
+    return config;
+  };
 }
