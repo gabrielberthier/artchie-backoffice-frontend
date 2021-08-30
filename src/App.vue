@@ -2,9 +2,13 @@
   <router-view />
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
+import { intercept } from "./services/auth/interceptors";
 
 export default defineComponent({
-  name: 'App'
-})
+  name: "App",
+  setup() {
+    intercept();
+  },
+});
 </script>
