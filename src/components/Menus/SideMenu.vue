@@ -7,15 +7,25 @@
     "
   >
     <q-list padding>
-      <q-item clickable v-ripple>
-        <q-item-section avatar>
-          <q-icon class="text-purple-4" name="o_museum" />
-        </q-item-section>
+      <router-link to="/" class="link-unstyled">
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-icon class="" name="o_home" />
+          </q-item-section>
 
-        <q-item-section>
-          <router-link to="/museums"> Museums </router-link>
-        </q-item-section>
-      </q-item>
+          <q-item-section> Home </q-item-section>
+        </q-item>
+      </router-link>
+
+      <router-link to="/museums" class="link-unstyled">
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-icon class="" name="o_museum" />
+          </q-item-section>
+
+          <q-item-section> Museums </q-item-section>
+        </q-item>
+      </router-link>
 
       <sub-menu></sub-menu>
 
@@ -47,7 +57,7 @@
 
   <q-img
     class="absolute-top blurred-image"
-    src="~assets/menu-user/wpminimalist.jpg"
+    src="~assets/menu-user/earth-minimal-wallpaper.jpg"
     style="height: 150px"
   >
     <div class="absolute-bottom bg-transparent">
@@ -92,6 +102,12 @@ export default {
 
 <style lang="scss" scoped>
 .blurred-image::v-deep .q-img__image {
-  filter: blur(3px);
+  filter: blur(1px);
+}
+
+.link-unstyled {
+  text-decoration: none;
+  color: inherit;
+  color: rgba($color: #000000, $alpha: 0.7);
 }
 </style>
