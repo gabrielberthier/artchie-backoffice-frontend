@@ -1,78 +1,26 @@
 <template>
-  <div class="q-pa-md row items-start justify-center q-gutter-md">
-    <div class="col-sm-12 col-md-3">
-      <q-card class="my-card">
-        <q-img
-          src="~/assets/museums/foto-aerea-do-nosso-forte.jpg"
-          class="imagem-height"
-        >
-          <div class="absolute-bottom text-h6">Museu do Forte</div>
-        </q-img>
-        <q-card-section>
-          <div class="text-h6 ellipsis">Museu em São Luís - Maranhão</div>
-          <div class="text-subtitle2">forte@mail.com</div>
-        </q-card-section>
-        <q-card-section>
-          <p class="ellipsis-3-lines text-card">
-            {{ lorem }}
-          </p>
-        </q-card-section>
-      </q-card>
-    </div>
+  <div class="q-pa-md q-my-md">
+    <carousel-museum />
 
-    <div class="col-sm-12 col-md-3">
-      <q-card class="my-card">
-        <q-img
-          src="~/assets/museums/cathedral-of-santa-maria.jpg"
-          class="imagem-height"
-        >
-          <div class="absolute-bottom text-h6">Maria Del Fiore</div>
-        </q-img>
-        <q-card-section>
-          <div class="text-h6">Catedral em Itália</div>
-          <div class="text-subtitle2">fiore@mail.com</div>
-        </q-card-section>
-        <q-card-section>
-          <p class="ellipsis-3-lines text-card">
-            {{ lorem }}
-          </p>
-        </q-card-section>
-      </q-card>
-    </div>
-
-    <div class="col-sm-12 col-md-3">
-      <q-card class="my-card">
-        <q-img src="~/assets/museums/louvre.jpg" class="imagem-height">
-          <div class="absolute-bottom text-h6">Museu do Louvre</div>
-        </q-img>
-        <q-card-section>
-          <q-btn
-            fab
-            icon="add"
-            class="absolute btn-more-info"
-            style="top: 0; right: 12px; transform: translateY(-50%)"
-          />
-
-          <div class="row no-wrap items-center">
-            <div class="col text-h6 ellipsis">Museu de Paris</div>
-          </div>
-          <div class="text-subtitle2">fiore@mail.com</div>
-        </q-card-section>
-
-        <q-card-section>
-          <p class="ellipsis-3-lines text-card">
-            {{ lorem }}
-          </p>
-        </q-card-section>
-      </q-card>
-    </div>
+    <q-page-sticky
+      position="bottom-center"
+      :offset="[18, 18]"
+      class="q-mt-lg button-more"
+    >
+      <q-fab icon="add" direction="right" class="button-action" glossy>
+        <q-fab-action class="sub" icon="add_circle" />
+        <q-fab-action class="sub" icon="mail" />
+      </q-fab>
+    </q-page-sticky>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import CarouselMuseum from "../../components/Carousel/Museum/CarouselMuseum.vue";
 
 export default defineComponent({
+  components: { CarouselMuseum },
   name: "MuseumIndex",
   setup() {
     return {
@@ -84,16 +32,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.imagem-height {
-  height: 200px;
+.button-more {
+  position: fixed;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-100%) !important;
 }
 
-.btn-more-info {
-  background-color: rgba($color: #9932cc, $alpha: 0.9);
+.button-action {
+  background-color: rgba($color: #be2182, $alpha: 0.9);
   color: white;
-}
-
-.text-card {
-  text-align: justify;
+  .sub {
+    // background: linear-gradient(-60.76deg, #9679ff, #d499ea 57.96%, #eea4b3);
+    background-color: #61045f;
+  }
 }
 </style>
