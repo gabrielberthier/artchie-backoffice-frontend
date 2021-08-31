@@ -9,7 +9,7 @@
     >
       <q-fab icon="add" direction="right" class="button-action" glossy>
         <q-fab-action class="sub" icon="add_circle" />
-        <q-fab-action class="sub" icon="mail" />
+        <q-fab-action class="sub" icon="filter_list" />
       </q-fab>
     </q-page-sticky>
   </div>
