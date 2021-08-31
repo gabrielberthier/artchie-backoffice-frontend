@@ -12,7 +12,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     intercept(store);
-    client.post("/").then(console.log);
+    client.get("/").then(console.log);
   },
 });
 </script>

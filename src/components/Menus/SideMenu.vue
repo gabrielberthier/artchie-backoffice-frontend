@@ -9,10 +9,12 @@
     <q-list padding>
       <q-item clickable v-ripple>
         <q-item-section avatar>
-          <q-icon name="inbox" />
+          <q-icon class="text-purple-4" name="o_museum" />
         </q-item-section>
 
-        <q-item-section> Inbox </q-item-section>
+        <q-item-section>
+          <router-link to="/museums"> Museums </router-link>
+        </q-item-section>
       </q-item>
 
       <sub-menu></sub-menu>
