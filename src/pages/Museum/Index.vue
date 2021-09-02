@@ -3,7 +3,7 @@
     <carousel-museum />
 
     <q-page-sticky
-      position="bottom-center"
+      position="bottom"
       :offset="[18, 18]"
       class="q-mt-lg button-more"
     >
@@ -35,8 +35,6 @@ export default defineComponent({
 .button-more {
   position: fixed;
   bottom: 5px;
-  left: 50%;
-  transform: translateX(-100%) !important;
 }
 
 .button-action {
