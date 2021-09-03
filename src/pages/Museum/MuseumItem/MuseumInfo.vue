@@ -1,8 +1,12 @@
 <template>
-  <div class="container flex-start">
-    <cool-museum-bg />
-    <museum-content />
-    <media-museum />
+  <div>
+    <div class="container flex-start">
+      <cool-museum-bg />
+      <museum-content />
+      <media-museum />
+    </div>
+
+    <marker-table />
   </div>
 </template>
 
@@ -12,9 +16,10 @@ import { QSpinnerGears, QSpinnerRadio } from "quasar";
 import CoolMuseumBg from "./CoolMuseumBg.vue";
 import MuseumContent from "./MuseumContent.vue";
 import MediaMuseum from "./MediaMuseum.vue";
+import MarkerTable from "src/components/Tables/Marker/MarkerTable.vue";
 
 export default {
-  components: { CoolMuseumBg, MuseumContent, MediaMuseum },
+  components: { CoolMuseumBg, MuseumContent, MediaMuseum, MarkerTable },
   setup() {
     const isOnline = window.navigator.onLine;
     const $q = useQuasar();

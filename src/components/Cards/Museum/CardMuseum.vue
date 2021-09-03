@@ -9,7 +9,9 @@
         icon="o_arrow_forward"
         class="absolute btn-more-info"
         style=""
-      />
+        @click="sendToInfo"
+      >
+      </q-btn>
 
       <div class="row no-wrap items-center">
         <div class="col text-h6 ellipsis">{{ museumInfo }}</div>
@@ -56,6 +58,11 @@ export default defineComponent({
     museumImage: {
       type: String,
       default: require("assets/museums/louvre.jpg"),
+    },
+  },
+  methods: {
+    sendToInfo() {
+      this.$router.push({ path: "/museums/5" });
     },
   },
 });
