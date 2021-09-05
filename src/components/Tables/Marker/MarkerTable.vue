@@ -13,16 +13,20 @@
             <q-skeleton type="circle" />
           </q-td>
           <q-td key="markerName" :props="props">
-            {{ props.row.markerName }}
+            <!-- {{ props.row.markerName }} -->
+            <q-skeleton type="text" />
           </q-td>
           <q-td key="text" :props="props">
-            {{ props.row.text }}
+            <!-- {{ props.row.text }} -->
+            <q-skeleton type="text" />
           </q-td>
           <q-td key="title" :props="props">
-            {{ props.row.title }}
+            <!-- {{ props.row.title }} -->
+            <q-skeleton type="text" />
           </q-td>
           <q-td key="path" :props="props">
-            {{ props.row.path }}
+            <!-- {{ props.row.path }} -->
+            <q-skeleton type="text" />
           </q-td>
         </q-tr>
       </template>
@@ -51,8 +55,14 @@ export default {
   margin: 0 auto;
 }
 
-.q-pa-md::v-deep(thead) {
-  background-color: hsla(2, 78%, 62%, 1);
-  color: white;
+.q-pa-md {
+  &::v-deep(thead){
+    th{
+      color: white;
+      font-weight: bold !important;
+    }
+    background-color: hsla(2, 78%, 62%, 1);
+  }
+  
 }
 </style>

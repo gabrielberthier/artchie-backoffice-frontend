@@ -10,12 +10,18 @@ export const columns = [
   },
   {
     name: "markerName",
-    align: "center",
+    align: "left",
     label: "Name",
     field: "markerName",
     sortable: true,
   },
-  { name: "text", label: "Description", field: "text", sortable: false },
-  { name: "title", label: "Title", field: "title" },
-  { name: "path", label: "Path", field: "path" },
+  {
+    name: "text",
+    label: "Description",
+    align: "left",
+    field: "text",
+    sortable: false,
+  },
+  { name: "title", label: "Title", align: "left", field: "title" },
+  { name: "path", label: "Path", align: "left", field: "path" },
 ];
