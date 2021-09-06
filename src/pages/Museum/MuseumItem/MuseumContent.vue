@@ -1,9 +1,9 @@
 <template>
   <div class="container__content">
-    <h1 class="title text-1 ellipsis">Museum do Forte</h1>
+    <h1 class=" text-h4 ellipsis">Museum do Forte </h1>
 
-    <div class="text-h6 ellipsis">
-      <span class="small"> Museu em SLZ - MA </span>
+    <div class="ellipsis text-subtitle1">
+       Museu em SLZ - MA 
     </div>
 
     <p class="text-description">
@@ -21,7 +21,6 @@
 .title {
   font-size: 1.5rem;
   margin: 15px 0;
-  font-weight: 300;
   line-height: 4rem;
   font-weight: 600;
 }
@@ -35,7 +34,7 @@
 }
 
 .container__content .text-description {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #444;
   font-weight: 300;
   margin: 20px 0;
@@ -43,9 +42,9 @@
 
 .date-museum {
   color: #333;
-  font-size: 14px;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: bold;
   margin-bottom: 15px;
 }
 

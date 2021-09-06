@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-py-md">
     <q-table
       class="container"
       title="Markers"
@@ -7,9 +7,26 @@
       :columns="columns"
       row-key="markerName"
     >
+    <template v-slot:top>
+        <div class="text-h6">
+          Markers
+        </div>
+        
+        <q-space />
+        
+        
+        <q-input  dense debounce="300" color="primary" >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+
+        <q-btn round icon="add" class="q-ml-sm colored-btn" size="md"  @click="openCard" />
+        
+      </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="asset" :props="props">
+          <q-td key="asset" :props="props"  @click="openCard">
             <q-skeleton type="circle" />
           </q-td>
           <q-td key="markerName" :props="props">
@@ -31,20 +48,33 @@
         </q-tr>
       </template>
     </q-table>
+
+  <marker-card v-model="card"/>
+
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { rows } from "./mock/rows";
 import { columns } from "./mock/columns";
+import MarkerCard from './MarkerCard/MarkerCard.vue';
 
 export default {
+  components: { MarkerCard },
+
   setup() {
     return {
       columns,
       rows,
+      card: ref(false),
     };
   },
+  methods: {
+    openCard(){
+      this.card = true;
+    }
+  }
 };
 </script>
 
@@ -55,7 +85,7 @@ export default {
   margin: 0 auto;
 }
 
-.q-pa-md {
+.q-py-md {
   &::v-deep(thead){
     th{
       color: white;
@@ -63,6 +93,11 @@ export default {
     }
     background-color: hsla(2, 78%, 62%, 1);
   }
-  
+}
+
+.colored-btn{
+  // background-color: hsla(2, 78%, 62%, 1);
+   background: hsla(22, 100%, 78%, 1);
+  color: white;
 }
 </style>
