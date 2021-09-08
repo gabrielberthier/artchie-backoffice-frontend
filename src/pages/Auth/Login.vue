@@ -2,7 +2,7 @@
   <q-page class="login-background row justify-center items-center">
     <div class="column">
       <div class="row">
-        <h5 class="text-h5 text-white q-my-md">Artchie</h5>
+        <h5 class="text-h5 text-white q-my-md">Artchie - Login</h5>
       </div>
       <div class="row">
         <q-card bordered class="q-pa-lg shadow-1">
@@ -28,7 +28,9 @@
             />
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
-            <p class="text-grey-6">Not reigistered? Create a new Account</p>
+            <router-link :to="{ name: 'signup' }">
+              <p class="text-grey-6">Not reigistered? Create a new Account</p>
+            </router-link>
           </q-card-section>
         </q-card>
       </div>

@@ -1,14 +1,16 @@
+import OpenLayout from "layouts/Open/Index.vue";
+import Login from "pages/Auth/Login.vue";
+import SignUp from "pages/Auth/SignUp.vue";
+
 const routes = [
   {
     path: "/",
-    component: () => import("pages/Index.vue"),
     name: "front",
-  },
-  {
-    path: "/login",
-    name: "login",
-    children: [{ path: "", component: () => import("pages/Auth/Login.vue") }],
-    component: () => import("layouts/Open/Index.vue"),
+    component: OpenLayout,
+    children: [
+      { path: "login", component: Login, name: "login" },
+      { path: "register", component: SignUp, name: "signup" },
+    ],
   },
   {
     path: "/intern",
