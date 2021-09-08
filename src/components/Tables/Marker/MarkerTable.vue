@@ -7,26 +7,22 @@
       :columns="columns"
       row-key="markerName"
     >
-    <template v-slot:top>
-        <div class="text-h6">
-          Markers
-        </div>
-        
+      <template v-slot:top>
+        <div class="text-h6">Markers</div>
+
         <q-space />
-        
-        
-        <q-input  dense debounce="300" color="primary" >
+
+        <q-input dense debounce="300" color="primary">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
 
-        <q-btn round icon="add" class="q-ml-sm colored-btn" size="md"  @click="openCard" />
-        
+        <q-btn round icon="add" class="q-ml-sm colored-btn" size="md" @click="openCard" />
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="asset" :props="props"  @click="openCard">
+          <q-td key="asset" :props="props" @click="openCard">
             <q-skeleton type="circle" />
           </q-td>
           <q-td key="markerName" :props="props">
@@ -49,32 +45,31 @@
       </template>
     </q-table>
 
-  <marker-card v-model="card"/>
-
+    <marker-card v-model="card" />
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive } from "vue";
 import { rows } from "./mock/rows";
 import { columns } from "./mock/columns";
-import MarkerCard from './MarkerCard/MarkerCard.vue';
+import MarkerCard from "src/components/Cards/Marker/MarkerCard.vue";
 
 export default {
   components: { MarkerCard },
 
   setup() {
     return {
-      columns,
-      rows,
+      columns: reactive(columns),
+      rows: reactive(rows),
       card: ref(false),
     };
   },
   methods: {
-    openCard(){
+    openCard() {
       this.card = true;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -86,8 +81,8 @@ export default {
 }
 
 .q-py-md {
-  &::v-deep(thead){
-    th{
+  &::v-deep(thead) {
+    th {
       color: white;
       font-weight: bold !important;
     }
@@ -95,9 +90,9 @@ export default {
   }
 }
 
-.colored-btn{
+.colored-btn {
   // background-color: hsla(2, 78%, 62%, 1);
-   background: hsla(22, 100%, 78%, 1);
+  background: hsla(22, 100%, 78%, 1);
   color: white;
 }
 </style>
