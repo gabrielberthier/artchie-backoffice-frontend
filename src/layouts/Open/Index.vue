@@ -21,6 +21,10 @@ export default {
     };
   },
   components: {},
+  mounted() {
+    console.log(this.$store?.state?.s3?.key);
+    console.log(`Working on '${process.env.VUE_APP_MODE}' mode`);
+  },
 };
 </script>
 
