@@ -13,7 +13,7 @@ export function responseInterceptorFactory(store) {
    * @returns {import("axios").AxiosRequestConfig}
    */
   return (config) => {
-    const renew = config.headers["x-refresh-token"];
+    const renew = config.headers["X-RENEW-TOKEN"];
     console.log(store);
     const loggedIn = store.getters["auth/loggedIn"];
 
@@ -45,7 +45,7 @@ export function onErrorInterceptor(store) {
       store.dispatch("auth/logout").then((wasLogged) => {
         if (wasLogged) router.push({ name: "home" });
       });
-    } else if (err.status === 500) {
+    } else if (err.response?.status === 500) {
       console.log(err);
     }
     return Promise.reject(err);

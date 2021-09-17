@@ -1,5 +1,5 @@
 import OpenLayout from "layouts/Open/Index.vue";
-import Login from "pages/Auth/Login.vue";
+import Login from "src/pages/Auth/Login/Login.vue";
 import SignUp from "pages/Auth/SignUp.vue";
 
 const routes = [
