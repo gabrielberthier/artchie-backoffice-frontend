@@ -8,8 +8,20 @@
         <q-card bordered class="q-pa-lg shadow-1">
           <q-card-section>
             <q-form class="q-gutter-md">
-              <q-input filled clearable v-model="email" type="email" label="Email" />
-              <q-input filled clearable v-model="username" type="text" label="Username" />
+              <q-input
+                filled
+                clearable
+                v-model="email"
+                type="email"
+                label="Email"
+              />
+              <q-input
+                filled
+                clearable
+                v-model="username"
+                type="text"
+                label="Username"
+              />
               <q-input
                 filled
                 clearable
@@ -70,7 +82,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .q-card {
   width: 360px;
 }

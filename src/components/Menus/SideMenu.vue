@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blurred-image::v-deep .q-img__image {
+.blurred-image::v-deep(.q-img__image) {
   filter: blur(1px);
 }
 

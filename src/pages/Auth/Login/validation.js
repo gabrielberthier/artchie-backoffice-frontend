@@ -4,7 +4,7 @@ import { required, minLength } from "@vuelidate/validators";
 /**
  *
  * @param {object} state
- * @returns { import("vue$").Ref<any> }
+ * @returns { import("vue$").Ref}
  */
 export default function createValidation(state) {
   const rules = computed(() => ({

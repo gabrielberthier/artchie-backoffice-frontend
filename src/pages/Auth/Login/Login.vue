@@ -16,7 +16,7 @@
               />
               <div
                 class="input-errors text-red"
-                v-for="(error, index) of v$?.access?.$errors"
+                v-for="(error, index) of v$.access?.$errors"
                 :key="index"
               >
                 <div class="error-msg">
@@ -32,7 +32,7 @@
               />
               <div
                 class="input-errors text-red"
-                v-for="(error, index) of v$?.password?.$errors"
+                v-for="(error, index) of v$.password?.$errors"
                 :key="index"
               >
                 <div class="error-msg">
@@ -55,8 +55,8 @@
           <q-card-section class="text-center q-pa-none">
             <p class="text-grey-6">
               Not reigistered?
-              <router-link :to="{ name: 'signup' }"
-                >Create a new Account
+              <router-link :to="{ name: 'signup' }">
+                Create a new Account
               </router-link>
             </p>
           </q-card-section>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { ref, computed, reactive } from "vue";
+import { reactive } from "vue";
 import createValidation from "./validation";
 
 export default {
@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .q-card {
   width: 360px;
 }

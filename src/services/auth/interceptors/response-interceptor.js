@@ -14,7 +14,7 @@ export function responseInterceptorFactory(store) {
    */
   return (config) => {
     const renew = config.headers["X-RENEW-TOKEN"];
-    console.log(store);
+
     const loggedIn = store.getters["auth/loggedIn"];
 
     if (loggedIn && renew) {

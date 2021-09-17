@@ -6,7 +6,7 @@
       label="Placement object"
       caption="Placement object name"
     >
-      <q-card>
+      <q-card style="width: auto">
         <q-img
           src="https://i.pinimg.com/originals/5c/5d/86/5c5d867cbe7287af854ea84c4d7b4a86.jpg"
           fit="cover"
