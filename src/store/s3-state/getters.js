@@ -1,4 +1,3 @@
-/*
-export function someGetter (state) {
+export function key(state) {
+  return state.key;
 }
-*/

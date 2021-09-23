@@ -4,12 +4,13 @@ import { required, minLength } from "@vuelidate/validators";
 /**
  *
  * @param {object} state
- * @returns { import("vue$").Ref}
+ * @returns { import("vue").Ref<import("@vuelidate/core").BaseValidation}
  */
 export default function createValidation(state) {
   const rules = computed(() => ({
     access: {
       required,
+      min: minLength(6),
     },
     password: {
       required,

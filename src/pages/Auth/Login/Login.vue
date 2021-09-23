@@ -13,6 +13,7 @@
                 clearable
                 v-model="v$.access.$model"
                 label="Access"
+                @keydown.enter="login"
               />
               <div
                 class="input-errors text-red"
@@ -29,6 +30,7 @@
                 v-model="v$.password.$model"
                 type="password"
                 label="Password"
+                @keydown.enter="login"
               />
               <div
                 class="input-errors text-red"
@@ -68,7 +70,10 @@
 
 <script>
 import { reactive } from "vue";
+import _ from "lodash";
 import createValidation from "./validation";
+import { useQuasar } from "quasar";
+import { doLogin } from "./login-call";
 
 export default {
   name: "Login",
@@ -80,19 +85,24 @@ export default {
 
     const v$ = createValidation(state);
 
-    return { state, v$ };
-  },
+    const quasar = useQuasar();
 
-  methods: {
-    async login() {
-      const isFormCorrect = await this.v$.$validate();
-
-      if (isFormCorrect) {
-        const { access, password } = this.state;
-        console.log(access);
-        console.log(password);
+    const makeLogin = async () => {
+      if (await v$.value.$validate()) {
+        const { status, data } = await doLogin(state);
+        if (status >= 200 && status < 300) {
+          console.log(data);
+        } else {
+          quasar.dialog({
+            title: "Error",
+            message: data,
+            class: "negative",
+          });
+        }
       }
-    },
+    };
+
+    return { state, v$, login: _.debounce(makeLogin, 1000) };
   },
 };
 </script>
@@ -105,5 +115,9 @@ export default {
 .login-background {
   background-color: #a4508b;
   background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+}
+
+.negative {
+  background-color: #c10015;
 }
 </style>

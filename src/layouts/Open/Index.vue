@@ -22,8 +22,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.$store?.state?.s3?.key);
-    console.log(`Working on '${process.env.VUE_APP_MODE}' mode`);
+    console.log(this.$store.getters["s3/key"]);
   },
 };
 </script>
