@@ -1,6 +1,6 @@
 import OpenLayout from "layouts/Open/Index.vue";
 import Login from "src/pages/Auth/Login/Login.vue";
-import SignUp from "pages/Auth/SignUp.vue";
+import SignUp from "src/pages/Auth/SignUp/SignUp.vue";
 
 const routes = [
   {
@@ -25,9 +25,6 @@ const routes = [
     ],
     meta: { requiresAuth: true },
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: "/:catchAll(.*)*",
     component: () => import("pages/Error404.vue"),

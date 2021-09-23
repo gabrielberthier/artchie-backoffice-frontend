@@ -11,26 +11,29 @@
               <q-input
                 filled
                 clearable
-                v-model="email"
+                v-model="v$.email.$model"
                 type="email"
                 label="Email"
               />
+              <error-component :errors="v$.email?.$errors" />
               <q-input
                 filled
                 clearable
-                v-model="username"
+                v-model="v$.username.$model"
                 type="text"
                 label="Username"
               />
+              <error-component :errors="v$.username?.$errors" />
               <q-input
                 filled
                 clearable
-                v-model="password"
+                v-model="v$.password.$model"
                 type="password"
                 label="Password"
               />
+              <error-component :errors="v$.password?.$errors" />
               <q-input
-                v-model="password_confirmation"
+                v-model="v$.passwordConfirmation.$model"
                 filled
                 label="Password confirmation"
                 :type="isPwd ? 'password' : 'text'"
@@ -44,6 +47,7 @@
                   />
                 </template>
               </q-input>
+              <error-component :errors="v$.passwordConfirmation?.$errors" />
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-md">
@@ -68,16 +72,24 @@
 </template>
 
 <script>
+import { reactive, ref } from "vue";
+import validationFactory from "./sign-up-validation";
+import ErrorComponent from "./ErrorComponent.vue";
+
 export default {
+  components: { ErrorComponent },
   name: "Login",
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       password: "",
       email: "",
       username: "",
-      password_confirmation: "",
-      isPwd: true,
-    };
+      passwordConfirmation: "",
+    });
+
+    const v$ = validationFactory(state);
+
+    return { state, v$, isPwd: ref(true) };
   },
 };
 </script>
