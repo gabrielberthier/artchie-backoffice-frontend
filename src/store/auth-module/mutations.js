@@ -4,12 +4,13 @@ import jwt from "jsonwebtoken";
 export function SET_USER_DATA(state, userData) {
   localStorage.removeItem("user");
   const decoded = jwt.decode(userData);
-  const { payload, exp, iat } = decoded;
+  console.log(decoded);
+  const { data, exp, iat } = decoded;
   const expiresIn = new Date(exp * 1000);
   const issuedAt = new Date(iat * 1000);
   const createdAt = new Date();
   const user = {
-    ...payload,
+    ...data,
     token: userData,
     expiresIn,
     issuedAt,
