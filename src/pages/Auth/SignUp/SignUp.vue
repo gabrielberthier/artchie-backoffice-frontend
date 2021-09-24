@@ -57,6 +57,7 @@
               size="lg"
               class="full-width"
               label="Register"
+              @click="makeSignUp"
             />
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
@@ -75,10 +76,13 @@
 import { reactive, ref } from "vue";
 import validationFactory from "./sign-up-validation";
 import ErrorComponent from "./ErrorComponent.vue";
+import { doSignUp } from "./sign-up-call";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   components: { ErrorComponent },
-  name: "Login",
+  name: "SignUp",
   setup() {
     const state = reactive({
       password: "",
@@ -88,8 +92,26 @@ export default {
     });
 
     const v$ = validationFactory(state);
+    const store = useStore();
+    const router = useRouter();
 
-    return { state, v$, isPwd: ref(true) };
+    const makeSignUp = async () => {
+      if (await v$.value.$validate()) {
+        const { status, data } = await doSignUp(state);
+        if (status >= 200 && status < 300) {
+          await store.dispatch("auth/login", data);
+          router.push({ name: "internhome" });
+        } else {
+          quasar.dialog({
+            title: "Error",
+            message: data,
+            class: "negative",
+          });
+        }
+      }
+    };
+
+    return { state, v$, isPwd: ref(true), makeSignUp };
   },
 };
 </script>

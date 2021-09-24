@@ -1,18 +1,25 @@
 import { client } from "src/services/http-base";
 import { AxiosError } from "axios";
 
-class LoginApiResponse {
+class SignUpApiResponse {
   constructor(status, data) {
     this.status = status;
     this.data = data;
   }
 }
 
-export async function doLogin({ access, password }) {
+export async function doSignUp({
+  email,
+  username,
+  password,
+  passwordConfirmation,
+}) {
   return client
-    .post("auth/login", {
-      access,
+    .post("auth/signup", {
+      email,
+      username,
       password,
+      passwordConfirmation,
     })
     .then(successHandler)
     .catch(errorHandler);
@@ -21,16 +28,16 @@ export async function doLogin({ access, password }) {
 /**
  * @param {import("axios").AxiosResponse} response
  *
- * @returns {LoginApiResponse}
+ * @returns {SignUpApiResponse}
  */
 const successHandler = (response) => {
-  return new LoginApiResponse(response.status, response.data?.data?.token);
+  return new SignUpApiResponse(response.status, response.data?.data?.token);
 };
 
 /**
  * @param {AxiosError} errorResponse
  *
- * @returns {LoginApiResponse}
+ * @returns {SignUpApiResponse}
  */
 const errorHandler = (errorResponse) => {
   let message = "";
@@ -47,12 +54,13 @@ const errorHandler = (errorResponse) => {
       message = data;
       break;
   }
-  return new LoginApiResponse(status, message);
+  return new SignUpApiResponse(status, message);
 };
 
 const map422 = (data) => {
   const validationErrors = {
-    access: "Username or email in a wrong format",
+    email: "Email in wrong format",
+    username: "Username in a wrong format",
     password: "Password in wrong format",
   };
 

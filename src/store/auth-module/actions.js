@@ -27,6 +27,9 @@ export async function verifyAccess({ commit }) {
       commit("CLEAR_USER_DATA");
       return false;
     }
+    if (user.token) {
+      commit("SET_USER_DATA", user.token);
+    }
   }
   return true;
 }

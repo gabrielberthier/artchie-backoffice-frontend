@@ -74,6 +74,8 @@ import _ from "lodash";
 import createValidation from "./validation";
 import { useQuasar } from "quasar";
 import { doLogin } from "./login-call";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Login",
@@ -86,12 +88,15 @@ export default {
     const v$ = createValidation(state);
 
     const quasar = useQuasar();
+    const store = useStore();
+    const router = useRouter();
 
     const makeLogin = async () => {
       if (await v$.value.$validate()) {
         const { status, data } = await doLogin(state);
         if (status >= 200 && status < 300) {
-          console.log(data);
+          await store.dispatch("auth/login", data);
+          router.push({ name: "internhome" });
         } else {
           quasar.dialog({
             title: "Error",

@@ -11,7 +11,7 @@ import { passwordRegex } from "./password-requirements";
 
 /**
  *
- * @param {object} state
+ * @param {import('vue').ReactiveEffect} state
  * @returns { import("vue").Ref<import("@vuelidate/core").BaseValidation}
  */
 export default function createSignUpValidation(state) {
@@ -20,10 +20,13 @@ export default function createSignUpValidation(state) {
     "This field must hava an upper case letter and at least a number",
     passwordRuleRegex
   );
+  const passwordRef = computed(() => state.password);
+
   const samePassword = helpers.withMessage(
     "Password and password confirmation must have the same value",
-    sameAs("password")
+    sameAs(passwordRef)
   );
+
   const rules = computed(() => ({
     email: {
       required,

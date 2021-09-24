@@ -11,6 +11,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     intercept(store);
+    store.dispatch("auth/verifyAccess").then(console.log);
   },
 });
 </script>
