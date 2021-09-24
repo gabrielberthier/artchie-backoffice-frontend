@@ -36,11 +36,11 @@ export default route(function ({ store, ssrContext }) {
   });
 
   Router.beforeEach((to, from, next) => {
-    if (
-      to.matched.some((m) => m.meta.requiresAuth) &&
-      !store.getters["auth/loggedIn"]
-    ) {
+    const { matched } = to;
+    if (authRedirect(matched, store) && from.name !== "internhome") {
       next({ name: "login", query: { next: to.fullPath } });
+    } else if (cantBeLogged(matched, store)) {
+      next({ name: "internhome" });
     } else {
       next();
     }
@@ -48,3 +48,23 @@ export default route(function ({ store, ssrContext }) {
 
   return Router;
 });
+
+/**
+ *
+ * @param {import("vue-router").RouteRecordNormalized[]} matched
+ * @param { import("vuex").Store } store
+ *
+ * @returns {boolean}
+ */
+const authRedirect = (matched, store) =>
+  matched.some((m) => m.meta.requiresAuth) && !store.getters["auth/loggedIn"];
+
+/**
+ *
+ * @param {import("vue-router").RouteRecordNormalized[]} matched
+ * @param { import("vuex").Store } store
+ *
+ * @returns {boolean}
+ */
+const cantBeLogged = (matched, store) =>
+  matched.some((m) => m.meta.cantBeLogged) && store.getters["auth/loggedIn"];

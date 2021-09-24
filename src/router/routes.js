@@ -8,8 +8,22 @@ const routes = [
     name: "front",
     component: OpenLayout,
     children: [
-      { path: "login", component: Login, name: "login" },
-      { path: "register", component: SignUp, name: "signup" },
+      {
+        path: "login",
+        component: Login,
+        name: "login",
+        meta: {
+          cantBeLogged: true,
+        },
+      },
+      {
+        path: "register",
+        component: SignUp,
+        name: "signup",
+        meta: {
+          cantBeLogged: true,
+        },
+      },
     ],
   },
   {
