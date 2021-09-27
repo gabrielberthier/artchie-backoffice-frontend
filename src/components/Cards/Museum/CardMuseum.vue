@@ -62,7 +62,7 @@ export default defineComponent({
   },
   methods: {
     sendToInfo() {
-      this.$router.push({ path: "/museums/5" });
+      this.$router.push({ name: "museumInfo", params: { id: "123" } });
     },
   },
 });

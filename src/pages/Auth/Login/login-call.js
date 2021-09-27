@@ -36,6 +36,7 @@ const errorHandler = (errorResponse) => {
   let message = "";
   const { status, data } = errorResponse.response;
   switch (status) {
+    case 400:
     case 403:
     case 404:
       message = "Your credentials are invalid";

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-py-md">
     <div class="container flex-start">
       <cool-museum-bg />
       <museum-content />
@@ -7,8 +7,6 @@
     </div>
 
     <marker-table />
-
-    
   </div>
 </template>
 
@@ -57,7 +55,6 @@ export default {
   overflow: hidden;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: 0.2s ease-in;
-  
 }
 
 .container:hover {

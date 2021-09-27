@@ -1,5 +1,5 @@
 <template>
-  <div class="q-py-md">
+  <div class="q-my-md">
     <q-table
       class="container"
       title="Markers"
@@ -18,7 +18,13 @@
           </template>
         </q-input>
 
-        <q-btn round icon="add" class="q-ml-sm colored-btn" size="md" @click="openCard" />
+        <q-btn
+          round
+          icon="add"
+          class="q-ml-sm colored-btn"
+          size="md"
+          @click="openMarkerCreatorCard"
+        />
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -46,6 +52,7 @@
     </q-table>
 
     <marker-card v-model="card" />
+    <create-marker v-model="markerCreator" />
   </div>
 </template>
 
@@ -53,21 +60,27 @@
 import { ref, reactive } from "vue";
 import { rows } from "./mock/rows";
 import { columns } from "./mock/columns";
-import MarkerCard from "src/components/Cards/Marker/MarkerCard.vue";
+import MarkerCard from "src/components/Cards/Marker/SubjectInformation/MarkerCard.vue";
+
+import CreateMarker from "src/components/Cards/Marker/Create/CreateMarker.vue";
 
 export default {
-  components: { MarkerCard },
+  components: { MarkerCard, CreateMarker },
 
   setup() {
     return {
       columns: reactive(columns),
       rows: reactive(rows),
       card: ref(false),
+      markerCreator: ref(false),
     };
   },
   methods: {
     openCard() {
       this.card = true;
+    },
+    openMarkerCreatorCard() {
+      this.markerCreator = true;
     },
   },
 };

@@ -41,9 +41,14 @@ const routes = [
         component: () => import("src/pages/Application/Index.vue"),
         name: "internhome",
       },
-      { path: "museums", component: () => import("pages/Museum/Index.vue") },
+      {
+        path: "museums",
+        component: () => import("pages/Museum/Index.vue"),
+        name: "MuseumsIndex",
+      },
       {
         path: "museums/:id",
+        name: "museumInfo",
         component: () => import("pages/Museum/MuseumItem/MuseumInfo.vue"),
       },
     ],

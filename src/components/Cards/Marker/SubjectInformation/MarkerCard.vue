@@ -1,5 +1,9 @@
 <template>
-  <q-dialog ref="dialog" @update:model-value="updateModelValue" :value="modelValue">
+  <q-dialog
+    ref="dialog"
+    @update:model-value="updateModelValue"
+    :value="modelValue"
+  >
     <q-card class="my-card">
       <q-img
         src="https://64.media.tumblr.com/tumblr_ljs1vbcL1K1qa5yk4o1_500.jpg"
@@ -24,7 +28,7 @@
 import { ref } from "vue";
 import PlacementObjectSection from "./Sections/PlacementObjectSection.vue";
 import BodyMarkerCard from "./Sections/BodyMarkerCard.vue";
-import MarkerCardActions from "./Sections/MarkerCardActions.vue";
+import MarkerCardActions from "../Subs/MarkerCardActions.vue";
 import HeadingMarkerCard from "./Sections/HeadingMarkerCard.vue";
 
 export default {

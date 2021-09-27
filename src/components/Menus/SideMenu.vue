@@ -17,7 +17,7 @@
         </q-item>
       </router-link>
 
-      <router-link to="/museums" class="link-unstyled">
+      <router-link :to="{ name: 'MuseumsIndex' }" class="link-unstyled">
         <q-item clickable v-ripple>
           <q-item-section avatar>
             <q-icon class="" name="o_museum" />
@@ -84,6 +84,6 @@ export default {
 .link-unstyled {
   text-decoration: none;
   color: inherit;
-  color: rgba($color: #000000, $alpha: 0.7);
+  color: rgba($color: #000000, $alpha: 0.9);
 }
 </style>
