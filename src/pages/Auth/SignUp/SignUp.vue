@@ -79,6 +79,7 @@ import ErrorComponent from "./ErrorComponent.vue";
 import { doSignUp } from "./sign-up-call";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 export default {
   components: { ErrorComponent },
@@ -94,18 +95,24 @@ export default {
     const v$ = validationFactory(state);
     const store = useStore();
     const router = useRouter();
+    const $q = useQuasar();
 
     const makeSignUp = async () => {
       if (await v$.value.$validate()) {
         const { status, data } = await doSignUp(state);
         if (status >= 200 && status < 300) {
+          $q.loading.show({
+            backgroundColor: "grey",
+            customClass: "loader",
+          });
           await store.dispatch("auth/login", data);
+          $q.loading.hide();
           router.push({ name: "internhome" });
         } else {
-          quasar.dialog({
+          $q.dialog({
             title: "Error",
             message: data,
-            class: "negative",
+            class: "negative ",
           });
         }
       }
@@ -124,5 +131,9 @@ export default {
 .signup-background {
   background-color: #1fd1f9;
   background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+}
+
+.negative {
+  background-color: red;
 }
 </style>

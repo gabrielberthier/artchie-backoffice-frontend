@@ -44,8 +44,7 @@ const errorHandler = (errorResponse) => {
   const { status, data } = errorResponse.response;
   switch (status) {
     case 403:
-    case 404:
-      message = "Your credentials are invalid";
+      message = "Your username or email have already been chosen by someone";
       break;
     case 422:
       message = map422(data);

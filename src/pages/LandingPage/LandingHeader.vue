@@ -9,9 +9,9 @@
         notice shrink property since we are placing it
         as child of QToolbar
       -->
-        <q-btn stretch flat label="Sign in" />
+        <q-btn stretch flat label="Sign in" to="/login" />
 
-        <q-btn stretch flat label="Sign Up" />
+        <q-btn stretch flat label="Sign Up" to="/register" />
       </q-toolbar>
     </div>
     <div class="header-shape header-shape-1">

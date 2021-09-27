@@ -111,7 +111,7 @@
           </li>
         </ul>
         <div class="footer-copyright">
-          &copy; 2021 ARTChie, all rights reserved
+          &copy; 2021 Artchie, all rights reserved
         </div>
       </div>
     </div>

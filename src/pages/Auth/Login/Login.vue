@@ -93,9 +93,14 @@ export default {
 
     const makeLogin = async () => {
       if (await v$.value.$validate()) {
+        quasar.loading.show({
+          backgroundColor: "grey",
+          customClass: "loader",
+        });
         const { status, data } = await doLogin(state);
         if (status >= 200 && status < 300) {
           await store.dispatch("auth/login", data);
+
           router.push({ name: "internhome" });
         } else {
           quasar.dialog({
@@ -104,6 +109,7 @@ export default {
             class: "negative",
           });
         }
+        quasar.loading.hide();
       }
     };
 

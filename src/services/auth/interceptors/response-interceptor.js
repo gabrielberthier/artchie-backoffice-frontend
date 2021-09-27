@@ -43,7 +43,7 @@ export function onErrorInterceptor(store) {
       !err.config.__isRetryRequest
     ) {
       store.dispatch("auth/logout").then((wasLogged) => {
-        if (wasLogged) router.push({ name: "home" });
+        if (wasLogged) router.push({ name: "landing" });
       });
     } else if (err.response?.status === 500) {
       console.log(err);

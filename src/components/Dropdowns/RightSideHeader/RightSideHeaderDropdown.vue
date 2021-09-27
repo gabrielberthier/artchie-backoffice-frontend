@@ -6,7 +6,7 @@
         <menu-options />
 
         <q-item clickable v-ripple>
-          <q-item-section class="">Logout</q-item-section>
+          <q-item-section class="" @click="logout">Logout</q-item-section>
           <q-item-section avatar>
             <q-btn round dense flat color="blue" icon="logout"> </q-btn>
           </q-item-section>
@@ -34,6 +34,13 @@ import MenuOptions from "./MenuOptions.vue";
 export default {
   components: {
     MenuOptions,
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("auth/logout");
+
+      this.$router.push({ name: "landing" });
+    },
   },
 };
 </script>
