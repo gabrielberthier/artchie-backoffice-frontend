@@ -24,5 +24,14 @@ export default {
       model: ref(null),
     };
   },
+
+  watch: {
+    /**
+     * @param { File  } newValue
+     */
+    model(newValue, oldValue) {
+      this.$emit("filechanged", newValue);
+    },
+  },
 };
 </script>

@@ -7,3 +7,4 @@ export function userRole(state) {
 }
 
 export const userName = (state) => state.user.username;
+export const userToken = (state) => state.user?.token;

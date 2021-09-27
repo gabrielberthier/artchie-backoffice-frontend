@@ -21,7 +21,7 @@
       ]"
     />
 
-    <image-files />
+    <image-files @filechanged="submitFile" />
 
     <div>
       <q-btn label="Submit" type="submit" color="primary" />
@@ -34,6 +34,8 @@
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import ImageFiles from "../Files/ImageFiles.vue";
+import { fileUpload } from "src/services/http-base";
+import { mapGetters } from "vuex";
 
 export default {
   components: { ImageFiles },
@@ -61,6 +63,19 @@ export default {
         age.value = null;
       },
     };
+  },
+  computed: {
+    ...mapGetters({ token: "auth/userToken" }),
+  },
+  methods: {
+    async submitFile(file) {
+      const response = await fileUpload("api/upload-file", this.token, file, {
+        params: {
+          prefix: "marker",
+        },
+      });
+      console.log(response);
+    },
   },
 };
 </script>
