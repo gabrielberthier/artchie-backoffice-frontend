@@ -5,3 +5,5 @@ export function loggedIn(state) {
 export function userRole(state) {
   return state.user?.role;
 }
+
+export const userName = (state) => state.user.username;

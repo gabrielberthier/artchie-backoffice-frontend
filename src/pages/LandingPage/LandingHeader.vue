@@ -9,9 +9,11 @@
         notice shrink property since we are placing it
         as child of QToolbar
       -->
-        <q-btn stretch flat label="Sign in" to="/login" />
+        <q-btn stretch flat label="Sign in" to="/login" v-if="!loggedIn" />
 
-        <q-btn stretch flat label="Sign Up" to="/register" />
+        <q-btn stretch flat label="Sign Up" to="/register" v-if="!loggedIn" />
+
+        <landing-header-dropdown v-if="loggedIn" />
       </q-toolbar>
     </div>
     <div class="header-shape header-shape-1">
@@ -75,3 +77,15 @@
 </template>
 
 <style lang="scss" scoped></style>
+
+<script>
+import { mapGetters } from "vuex";
+import LandingHeaderDropdown from "src/components/Dropdowns/LandingHeader/LandingHeaderDropdown.vue";
+
+export default {
+  components: { LandingHeaderDropdown },
+  computed: {
+    ...mapGetters({ loggedIn: "auth/loggedIn" }),
+  },
+};
+</script>

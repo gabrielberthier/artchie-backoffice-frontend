@@ -1,5 +1,5 @@
 <template>
-  <q-btn round dense flat :color="color" icon="account_circle">
+  <q-btn flat dense color="purple" icon="account_circle" :label="username">
     <!-- <q-badge color="red" text-color="white" floating> 5 </q-badge> -->
     <q-menu>
       <q-list class="list-header-dropdown-right">
@@ -13,22 +13,13 @@
 
           <!-- <q-item-section side>Side</q-item-section> -->
         </q-item>
-        <q-card class="text-center no-shadow no-border">
-          <q-btn
-            style="max-width: 120px !important"
-            flat
-            dense
-            padding="10px 5px"
-          >
-            <q-icon name="settings" />
-          </q-btn>
-        </q-card>
       </q-list>
     </q-menu>
   </q-btn>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import MenuOptions from "./MenuOptions.vue";
 
 export default {
@@ -42,11 +33,8 @@ export default {
       this.$router.push({ name: "landing" });
     },
   },
-  props: {
-    color: {
-      type: String,
-      default: "white",
-    },
+  computed: {
+    ...mapGetters({ username: "auth/userName" }),
   },
 };
 </script>
