@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     async submitFile(file) {
+      if (!file) return;
       const response = await fileUpload("api/upload-file", this.token, file, {
         params: {
           prefix: "marker",

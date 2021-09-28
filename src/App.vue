@@ -10,8 +10,8 @@ export default defineComponent({
   name: "App",
   setup() {
     const store = useStore();
-    intercept(store);
-    store.dispatch("auth/setUserUp");
+
+    store.dispatch("auth/setUserUp").then(() => intercept(store));
   },
 });
 </script>

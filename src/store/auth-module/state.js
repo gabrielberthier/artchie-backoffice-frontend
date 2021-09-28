@@ -1,5 +1,5 @@
 export default function () {
   return {
-    user: "gabs",
+    user: null,
   };
 }

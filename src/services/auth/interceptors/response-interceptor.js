@@ -13,7 +13,7 @@ export function responseInterceptorFactory(store) {
    * @returns {import("axios").AxiosRequestConfig}
    */
   return (config) => {
-    const renew = config.headers["X-RENEW-TOKEN"];
+    const renew = config.headers["x-renew-token"];
 
     const loggedIn = store.getters["auth/loggedIn"];
 
