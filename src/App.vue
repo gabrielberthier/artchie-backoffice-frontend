@@ -2,16 +2,31 @@
   <router-view />
 </template>
 <script>
-import { defineComponent } from "vue";
+import { useQuasar } from "quasar";
+import { defineComponent, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import { intercept } from "./services/auth/interceptors";
 
 export default defineComponent({
   name: "App",
   setup() {
-    const store = useStore();
+    const initApp = async () => {
+      const quasar = useQuasar();
+      quasar.loading.show({
+        backgroundColor: "grey",
+        customClass: "loader",
+      });
+      const store = useStore();
+      try {
+        await store.dispatch("auth/setUserUp");
+        intercept(store);
+      } catch (error) {
+      } finally {
+        quasar.loading.hide();
+      }
+    };
 
-    store.dispatch("auth/setUserUp").then(() => intercept(store));
+    onBeforeMount(() => initApp());
   },
 });
 </script>

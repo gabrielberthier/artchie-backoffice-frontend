@@ -13,11 +13,14 @@ export function interceptRequestFactory(store) {
    * @returns {import("axios").AxiosRequestConfig}
    */
   return (config) => {
-    store.dispatch("auth/verifyAccess").then((result) => {
-      if (!result) {
-        location.reload(true);
-      }
-    });
+    if (config.url !== "auth/logout") {
+      store.dispatch("auth/verifyAccess").then((result) => {
+        if (!result) {
+          location.reload(true);
+        }
+      });
+    }
+
     return config;
   };
 }
