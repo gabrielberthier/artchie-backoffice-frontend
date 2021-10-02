@@ -60,4 +60,9 @@ export default {
 .container:hover {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
+@media only screen and (max-width: 600px) {
+  .container {
+    margin-top: -15px !important;
+  }
+}
 </style>

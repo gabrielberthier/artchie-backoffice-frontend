@@ -13,7 +13,7 @@ export default defineComponent({
     const initApp = async () => {
       const quasar = useQuasar();
       quasar.loading.show({
-        backgroundColor: "grey",
+        backgroundColor: "purple-3",
         customClass: "loader",
       });
       const store = useStore();

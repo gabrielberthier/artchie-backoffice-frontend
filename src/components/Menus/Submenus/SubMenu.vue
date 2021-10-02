@@ -4,7 +4,6 @@
     icon="mail"
     label="Inbox"
     caption="5 unread emails"
-    default-opened
   >
     <q-expansion-item
       :header-inset-level="1"

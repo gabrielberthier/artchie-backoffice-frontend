@@ -5,9 +5,10 @@
     <div class="ellipsis text-subtitle1">Museu em SLZ - MA</div>
 
     <p class="text-description">
-      O Forte de Santo Antônio da Barra localiza-se na ponta de João Dias, atual Ponta
-      d'Areia, a sudoeste do Forte de São Marcos, dominando a barra do canal de acesso ao
-      porto de São Luís, no litoral do estado do Maranhão, no Brasil.
+      O Forte de Santo Antônio da Barra localiza-se na ponta de João Dias, atual
+      Ponta d'Areia, a sudoeste do Forte de São Marcos, dominando a barra do
+      canal de acesso ao porto de São Luís, no litoral do estado do Maranhão, no
+      Brasil.
     </p>
 
     <div class="date-museum">Inclusão: 25/04/2021</div>
@@ -35,6 +36,8 @@
   color: #444;
   font-weight: 300;
   margin: 20px 0;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .date-museum {
@@ -48,6 +51,10 @@
 @media only screen and (max-width: 600px) {
   .container__content {
     background-color: #f3f3f3;
+    border-radius: 15px;
+    margin-top: -15px;
+    text-align: justify;
+    min-width: initial;
   }
 }
 </style>
