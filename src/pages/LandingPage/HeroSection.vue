@@ -1,6 +1,6 @@
 <template>
   <section class="hero">
-    <div class="container">
+    <div class="container q-pa-lg">
       <div class="hero-inner">
         <div class="hero-copy">
           <h1 class="hero-title mt-0">ARTCHIE</h1>
