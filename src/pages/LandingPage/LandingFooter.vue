@@ -1,6 +1,6 @@
 <template>
   <footer class="site-footer">
-    <div class="container">
+    <div class="container q-pa-lg">
       <div class="site-footer-inner has-top-divider">
         <div class="brand footer-brand">
           <a href="#">

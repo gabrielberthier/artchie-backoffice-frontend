@@ -56,6 +56,7 @@ export async function setUserUp({ commit, state }) {
 
     if (authToken) {
       commit("SET_USER_DATA", authToken);
+      return state.user;
     }
   }
 }
