@@ -19,6 +19,7 @@ export const makeSelection = async (
   try {
     const params = { page, limit, ...extraParams };
     const { data, status } = await client.get(path, { params });
+    console.log();
     return success(status, data);
   } catch (error) {
     return failResponseHandler(error.response.status, error.response.data);

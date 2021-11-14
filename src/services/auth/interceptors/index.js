@@ -14,7 +14,7 @@ export function intercept(store) {
     responseInterceptorFactory(store),
     onErrorInterceptor(store)
   );
-  client.interceptors.request.use(interceptRequestFactory(store), (error) =>
-    Promise.reject(error)
-  );
+  // client.interceptors.request.use(interceptRequestFactory(store), (error) =>
+  //   Promise.reject(error)
+  // );
 }

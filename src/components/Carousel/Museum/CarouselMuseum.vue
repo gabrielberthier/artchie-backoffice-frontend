@@ -8,12 +8,12 @@
     :breakpoints="breakpoints"
     class="mySwiper swiper-container"
   >
-    <swiper-slide v-for="x in 10" :key="x" class="swiper-slide">
+    <swiper-slide v-for="x in museums" :key="x.id" class="swiper-slide">
       <div class="">
         <card-museum
-          museum-name="Teste Museu"
-          museum-email="test@mail.com"
-          museum-info="Em SLZ - MA"
+          :museum-name="x.name"
+          :museum-email="x.email"
+          :museum-info="x.info"
         />
       </div>
     </swiper-slide>
@@ -37,6 +37,12 @@ import CardMuseum from "src/components/Cards/Museum/CardMuseum.vue";
 SwiperCore.use([Pagination]);
 
 export default {
+  props: {
+    museums: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {
     Swiper,
     SwiperSlide,

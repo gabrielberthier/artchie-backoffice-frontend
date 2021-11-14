@@ -50,7 +50,9 @@ export async function setUserUp({ commit, state }) {
   const { user } = state;
 
   if (!user) {
-    const response = await client.get("/api/", { withCredentials: true });
+    const response = await client.get("/auth/refresh-token", {
+      withCredentials: true,
+    });
 
     const authToken = response.headers["x-renew-token"];
 

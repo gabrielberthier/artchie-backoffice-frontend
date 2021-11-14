@@ -1,5 +1,4 @@
-import { useRouter } from "vue-router";
-import { Store, useStore } from "vuex";
+import { Store } from "vuex";
 
 /**
  *
@@ -13,14 +12,6 @@ export function responseInterceptorFactory(store) {
    * @returns {import("axios").AxiosRequestConfig}
    */
   return (config) => {
-    const renew = config.headers["x-renew-token"];
-
-    const loggedIn = store.getters["auth/loggedIn"];
-
-    if (loggedIn && renew) {
-      store.dispatch("auth/login", renew).catch(console.error);
-      delete config.headers;
-    }
     return config;
   };
 }
@@ -34,18 +25,22 @@ export function onErrorInterceptor(store) {
   /**
    * @param {import('axios').AxiosError} err
    *
-   * @return {Promise<never}
+   * @return {Promise<never>}
    */
-  return (err) => {
-    if (
-      err.response?.status === 401 &&
-      err.config &&
-      !err.config.__isRetryRequest
-    ) {
-      store.dispatch("auth/logout").then((wasLogged) => {
-        if (wasLogged) router.push({ name: "landing" });
-      });
-    } else if (err.response?.status === 500) {
+  return async (err) => {
+    const originalRequest = err.config;
+    const status = err.response?.status;
+    if (status === 401 && originalRequest && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const user = await store.dispatch("auth/setUserUp");
+      if (user) {
+        return user;
+      }
+      const wasLogged = store.dispatch("auth/logout");
+      if (wasLogged) {
+        router.push({ name: "landing" });
+      }
+    } else if (status === 500) {
       console.log(err);
     }
     return Promise.reject(err);

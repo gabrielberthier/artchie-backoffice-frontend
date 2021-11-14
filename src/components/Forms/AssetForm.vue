@@ -34,7 +34,6 @@
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import ImageFiles from "../Files/ImageFiles.vue";
-import { fileUpload } from "src/services/http-base";
 import { mapGetters } from "vuex";
 
 export default {

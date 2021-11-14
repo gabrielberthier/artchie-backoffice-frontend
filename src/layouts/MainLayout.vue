@@ -19,7 +19,9 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <main class="q-page q-layout-padding" style="min-height: 350px">
+        <router-view />
+      </main>
     </q-page-container>
   </q-layout>
 </template>

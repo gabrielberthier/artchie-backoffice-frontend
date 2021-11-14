@@ -1,6 +1,16 @@
 <template>
   <div class="q-pa-md q-my-md">
-    <carousel-museum />
+    <carousel-museum v-if="museums.length" :museums="museums" />
+    <q-card class="my-card bg-red text-white" v-else>
+      <q-card-section>
+        <div class="text-h3">Nada aqui</div>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-subtitle2">
+          Adicione museus ao aplicativo utilizando o botão abaixo
+        </div>
+      </q-card-section>
+    </q-card>
 
     <q-page-sticky
       position="bottom"
@@ -16,16 +26,28 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { isSuccessfulResponse, makeSelection } from "src/services/http-base";
+import { defineComponent, onBeforeMount, ref } from "vue";
 import CarouselMuseum from "../../components/Carousel/Museum/CarouselMuseum.vue";
 
 export default defineComponent({
   components: { CarouselMuseum },
   name: "MuseumIndex",
   setup() {
+    const museums = ref([]);
+    const getMuseums = async () => {
+      const response = await makeSelection("api/museum/");
+
+      if (isSuccessfulResponse(response)) {
+        museums.value = response.data.data.items;
+      }
+    };
+
+    onBeforeMount(getMuseums);
+
     return {
-      lorem:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      museums,
+      getMuseums,
     };
   },
 });
