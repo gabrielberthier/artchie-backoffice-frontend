@@ -62,7 +62,7 @@ export const unprocessableEntity = (data) => {
     "Não é possível processar a requisição. " +
     "Um ou mais campos podem estar inválidos " +
     "ou  a requisição pode estar em formato errado";
-  return new Response(data, statusText, 422);
+  return new Response(data.error?.description, statusText, 422);
 };
 
 /**

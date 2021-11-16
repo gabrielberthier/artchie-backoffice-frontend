@@ -6,7 +6,7 @@
   >
     <q-card class="create-museum-card">
       <div class="q-pa-md">
-        <museum-form />
+        <museum-form @successful-submit="closeDialogOnSuccess" />
       </div>
 
       <q-card-actions align="right">
@@ -34,7 +34,7 @@ export default {
   components: { MuseumForm },
   setup() {
     return {
-      marker: reactive({}),
+      museum: reactive({}),
     };
   },
   props: {
@@ -52,10 +52,17 @@ export default {
     updateModelValue(event) {
       this.$emit("update:modelValue", event);
     },
+    closeDialogOnSuccess() {
+      console.log("Called at create Museum Dialog");
+
+      this.$emit("successful-insertion", true);
+    },
   },
+  emits: ["successful-insertion", "update:modelValue"],
   watch: {
     modelValue(newVal) {
       if (newVal) this.$refs["create-museum-dialog"].show();
+      else this.$refs["create-museum-dialog"].hide();
     },
   },
 };

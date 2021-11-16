@@ -23,7 +23,10 @@
       </q-fab>
     </q-page-sticky>
 
-    <create-museum-dialog v-model="openFormDialog" />
+    <create-museum-dialog
+      v-model="openFormDialog"
+      @successful-insertion="updateDialog"
+    />
   </div>
 </template>
 
@@ -49,10 +52,17 @@ export default defineComponent({
 
     onBeforeMount(getMuseums);
 
+    const openFormDialog = ref(false);
+
     return {
       museums,
       getMuseums,
-      openFormDialog: ref(false),
+      openFormDialog,
+      updateDialog() {
+        console.log("Chamado");
+        openFormDialog.value = false;
+        getMuseums();
+      },
     };
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
-  <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+  <q-form @submit="submit" @reset="onReset" class="q-gutter-md">
     <q-input
       filled
-      v-model="name"
+      v-model="data.name"
       label="Museu"
       hint="Nome do Museu"
       lazy-rules
@@ -11,7 +11,7 @@
 
     <q-input
       filled
-      v-model="email"
+      v-model="data.email"
       label="Email"
       hint="Email do Museu"
       lazy-rules
@@ -20,7 +20,7 @@
 
     <q-input
       filled
-      v-model="info"
+      v-model="data.info"
       label="Localização"
       hint="Localização do Museu"
       lazy-rules
@@ -29,7 +29,7 @@
 
     <q-input
       filled
-      v-model="description"
+      v-model="data.description"
       label="Descrição"
       hint="Descrição do Museu"
       lazy-rules
@@ -45,41 +45,59 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { reactive } from "vue";
 import { mapGetters } from "vuex";
+import _ from "lodash";
+import { isSuccessfulResponse, makePostRequest } from "src/services/http-base";
 
 export default {
-  setup() {
+  setup(props, { emit }) {
     const $q = useQuasar();
 
-    const name = ref(null);
-    const email = ref(null);
-    const info = ref(null);
-    const description = ref(null);
+    const data = reactive({
+      name: null,
+      email: null,
+      info: null,
+      description: null,
+    });
 
     return {
-      name,
-      email,
-      info,
-      description,
-
-      onSubmit() {
-        $q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Submitted",
+      data,
+      async submit() {
+        const { name, email, info, description } = data;
+        const response = await makePostRequest("api/museum/", {
+          name,
+          email,
+          info,
+          description,
         });
+        console.log(response);
+        if (isSuccessfulResponse(response)) {
+          $q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Submitted",
+          });
+          emit("successful-submit");
+        } else {
+          $q.notify({
+            color: "red",
+            textColor: "white",
+            icon: "cancel",
+            message: response.data,
+          });
+        }
       },
-
       onReset() {
-        name.value = null;
-        email.value = null;
-        info.value = null;
-        description.value = null;
+        data.name = null;
+        data.email = null;
+        data.info = null;
+        data.description = null;
       },
     };
   },
+  emits: ["update:data", "successful-submit"],
   computed: {
     ...mapGetters({ token: "auth/userToken" }),
   },
@@ -87,7 +105,7 @@ export default {
     isValidEmail() {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(this.email) || "Invalid email";
+      return emailPattern.test(this.data.email) || "Invalid email";
     },
   },
 };

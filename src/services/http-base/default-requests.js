@@ -67,7 +67,23 @@ export const makePostRequest = async (path, payload, fields = null) => {
     }
     return failResponseHandler(status, data);
   } catch (error) {
-    return failResponseHandler(status, error.response.data);
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      return failResponseHandler(error.response.status, error.response.data);
+    } else if (error.request) {
+      /**
+       * @type { XMLHttpRequest  }
+       */
+      const requestError = error.request;
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      return failResponseHandler(requestError.status, requestError.statusText);
+    } else {
+      console.log("Error", error.message);
+      return failResponseHandler(null, error.message);
+    }
   }
 };
 
