@@ -1,4 +1,4 @@
-import { client } from "src/services/http-base";
+import { api } from "src/boot/axios";
 
 export async function register({ commit }, payload) {
   return commit("SET_USER_DATA", payload);
@@ -9,7 +9,7 @@ export async function login({ commit }, payload) {
 }
 
 export async function logout({ commit }) {
-  await client.get("auth/logout");
+  await api.get("auth/logout");
 
   return commit("CLEAR_USER_DATA");
 }
@@ -49,16 +49,20 @@ export async function verifyAccess({ commit, state }) {
 export async function setUserUp({ commit, state }) {
   const { user } = state;
 
+  console.log(user);
+
   if (!user) {
-    const response = await client.get("/auth/refresh-token", {
+    const response = await api.get("/auth/refresh-token", {
       withCredentials: true,
     });
 
     const authToken = response.headers["x-renew-token"];
 
+    console.log(authToken);
+
     if (authToken) {
       commit("SET_USER_DATA", authToken);
-      return state.user;
+      return authToken;
     }
   }
 }

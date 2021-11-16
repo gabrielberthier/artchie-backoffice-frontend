@@ -1,26 +1,37 @@
 <template>
   <q-dialog
-    ref="create-marker-dialog"
+    ref="create-museum-dialog"
     @update:model-value="updateModelValue"
     :value="modelValue"
   >
-    <q-card class="create-marker-card">
+    <q-card class="create-museum-card">
       <div class="q-pa-md">
-        <asset-form />
+        <museum-form />
       </div>
 
-      <marker-card-actions />
+      <q-card-actions align="right">
+        <q-btn
+          v-close-popup
+          flat
+          size="md"
+          color="primary"
+          label="close"
+          class="left"
+        />
+        <q-btn v-close-popup size="md" color="negative" round icon="delete" />
+        <q-btn v-close-popup size="md" color="accent" round icon="update" />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
 import { reactive } from "vue";
-import MarkerCardActions from "../Subs/MarkerCardActions.vue";
-import AssetForm from "src/components/Forms/Assets/AssetForm.vue";
+
+import MuseumForm from "src/components/Forms/Museum/MusemInclusionForm.vue";
 
 export default {
-  components: { MarkerCardActions, AssetForm },
+  components: { MuseumForm },
   setup() {
     return {
       marker: reactive({}),
@@ -44,18 +55,14 @@ export default {
   },
   watch: {
     modelValue(newVal) {
-      if (newVal) this.$refs["create-marker-dialog"].show();
+      if (newVal) this.$refs["create-museum-dialog"].show();
     },
   },
 };
 </script>
 
 <style scoped>
-.card-info-text {
-  max-width: 380px;
-}
-
-.create-marker-card {
+.create-museum-card {
   width: 90vw;
   max-width: 450px;
 }

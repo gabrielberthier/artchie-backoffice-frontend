@@ -1,5 +1,5 @@
-import { client } from "src/services/http-base";
 import { AxiosError } from "axios";
+import { api } from "src/boot/axios";
 
 class SignUpApiResponse {
   constructor(status, data) {
@@ -14,7 +14,7 @@ export async function doSignUp({
   password,
   passwordConfirmation,
 }) {
-  return client
+  return api
     .post("auth/signup", {
       email,
       username,

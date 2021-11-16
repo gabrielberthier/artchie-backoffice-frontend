@@ -18,10 +18,12 @@
       class="q-mt-lg button-more"
     >
       <q-fab icon="add" direction="right" class="button-action" glossy>
-        <q-fab-action class="sub" icon="add_circle" />
+        <q-fab-action class="sub" icon="add_circle" @click="openDialog" />
         <q-fab-action class="sub" icon="filter_list" />
       </q-fab>
     </q-page-sticky>
+
+    <create-museum-dialog v-model="openFormDialog" />
   </div>
 </template>
 
@@ -29,12 +31,14 @@
 import { isSuccessfulResponse, makeSelection } from "src/services/http-base";
 import { defineComponent, onBeforeMount, ref } from "vue";
 import CarouselMuseum from "../../components/Carousel/Museum/CarouselMuseum.vue";
+import CreateMuseumDialog from "src/components/Dialogs/Museum/CreateMuseumDialog.vue";
 
 export default defineComponent({
-  components: { CarouselMuseum },
+  components: { CarouselMuseum, CreateMuseumDialog },
   name: "MuseumIndex",
   setup() {
     const museums = ref([]);
+
     const getMuseums = async () => {
       const response = await makeSelection("api/museum/");
 
@@ -48,7 +52,13 @@ export default defineComponent({
     return {
       museums,
       getMuseums,
+      openFormDialog: ref(false),
     };
+  },
+  methods: {
+    openDialog() {
+      this.openFormDialog = true;
+    },
   },
 });
 </script>

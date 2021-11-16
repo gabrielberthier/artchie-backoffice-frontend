@@ -1,4 +1,5 @@
-import { client, failResponseHandler } from "./index";
+import { api } from "src/boot/axios";
+import { failResponseHandler } from "./index";
 import { success } from "./response";
 
 /**
@@ -18,11 +19,28 @@ export const makeSelection = async (
 ) => {
   try {
     const params = { page, limit, ...extraParams };
-    const { data, status } = await client.get(path, { params });
-    console.log();
+
+    const { data, status } = await api.get(path, { params });
+
     return success(status, data);
   } catch (error) {
-    return failResponseHandler(error.response.status, error.response.data);
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      return failResponseHandler(error.response.status, error.response.data);
+    } else if (error.request) {
+      /**
+       * @type { XMLHttpRequest  }
+       */
+      const requestError = error.request;
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      return failResponseHandler(requestError.status, requestError.statusText);
+    } else {
+      console.log("Error", error.message);
+      return failResponseHandler(null, error.message);
+    }
   }
 };
 
@@ -36,7 +54,7 @@ export const makeSelection = async (
  */
 export const makePostRequest = async (path, payload, fields = null) => {
   try {
-    const { data, status } = await client.post(path, payload);
+    const { data, status } = await api.post(path, payload);
     if (status >= 200 && status < 300) {
       if (fields) {
         const bag = {};
@@ -61,7 +79,7 @@ export const makePostRequest = async (path, payload, fields = null) => {
  * @returns {import('./response').Response}
  */
 export const makeDeletionRequest = async (path, id) => {
-  const { data, status } = await client.delete(`${path}/${id}`);
+  const { data, status } = await api.delete(`${path}/${id}`);
   if (status >= 200 && status < 300) {
     return success(status, data);
   }
@@ -70,7 +88,7 @@ export const makeDeletionRequest = async (path, id) => {
 
 export const makePutRequest = async (path, id, payload, fields = null) => {
   try {
-    const { data, status } = await client.put(`${path}/${id}`, payload);
+    const { data, status } = await api.put(`${path}/${id}`, payload);
     if (status >= 200 && status < 300) {
       if (fields) {
         const bag = {};

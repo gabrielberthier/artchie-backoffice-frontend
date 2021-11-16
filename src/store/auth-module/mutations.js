@@ -1,5 +1,5 @@
-import { client } from "../../services/http-base/index";
 import jwt from "jsonwebtoken";
+import { api } from "src/boot/axios";
 
 export function SET_USER_DATA(state, userData) {
   const decoded = jwt.decode(userData);
@@ -15,16 +15,16 @@ export function SET_USER_DATA(state, userData) {
     createdAt,
   };
   state.user = user;
-  client.defaults.headers.common["Authorization"] = `Bearer ${userData}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${userData}`;
 }
 
 export function CLEAR_USER_DATA(state) {
-  client.defaults.headers.common["Authorization"] = null;
+  api.defaults.headers.common["Authorization"] = null;
 
   state.user = null;
 }
 
 export function SET_TOKEN_HEADER(state, userData) {
   state.user = userData;
-  client.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
 }

@@ -5,7 +5,6 @@
 import { useQuasar } from "quasar";
 import { defineComponent, onBeforeMount } from "vue";
 import { useStore } from "vuex";
-import { intercept } from "./services/auth/interceptors";
 import { useRouter, useRoute } from "vue-router";
 
 export default defineComponent({
@@ -26,7 +25,6 @@ export default defineComponent({
         if (user) {
           router.push({ path: route.query.next });
         }
-        intercept(store);
       } catch (error) {
       } finally {
         quasar.loading.hide();

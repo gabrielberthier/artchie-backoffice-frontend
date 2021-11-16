@@ -1,6 +1,4 @@
-import { client } from "src/services/http-base";
 import { Store } from "vuex";
-import { interceptRequestFactory } from "./request-interceptors";
 import {
   responseInterceptorFactory,
   onErrorInterceptor,
@@ -8,13 +6,15 @@ import {
 
 /**
  * @param {Store}
+ * @param {import("axios").AxiosInstance}
+ *
+ * @returns {import("axios").AxiosInstance}
  */
-export function intercept(store) {
+export function intercept(store, client) {
   client.interceptors.response.use(
-    responseInterceptorFactory(store),
+    responseInterceptorFactory(),
     onErrorInterceptor(store)
   );
-  // client.interceptors.request.use(interceptRequestFactory(store), (error) =>
-  //   Promise.reject(error)
-  // );
+
+  return client;
 }
