@@ -48,7 +48,7 @@ import { useQuasar } from "quasar";
 import { reactive } from "vue";
 import { mapGetters } from "vuex";
 import _ from "lodash";
-import { isSuccessfulResponse, makePostRequest } from "src/services/http-base";
+import { MuseumApiService } from "src/services/api";
 
 export default {
   setup(props, { emit }) {
@@ -65,14 +65,14 @@ export default {
       data,
       async submit() {
         const { name, email, info, description } = data;
-        const response = await makePostRequest("api/museum/", {
-          name,
-          email,
-          info,
-          description,
-        });
-        console.log(response);
-        if (isSuccessfulResponse(response)) {
+        const service = new MuseumApiService();
+        try {
+          const response = await service.post({
+            name,
+            email,
+            info,
+            description,
+          });
           $q.notify({
             color: "green-4",
             textColor: "white",
@@ -80,7 +80,7 @@ export default {
             message: "Submitted",
           });
           emit("successful-submit");
-        } else {
+        } catch (error) {
           $q.notify({
             color: "red",
             textColor: "white",

@@ -1,4 +1,4 @@
-class Response {
+export class Response {
   constructor(_data = {}, _statusText = "OK", _code = 200) {
     this.data = _data;
     this.statusCode = _code;
@@ -33,23 +33,6 @@ export const success = (status, data) => {
  */
 export const ok = (data) => {
   return new Response(data);
-};
-
-/**
- *
- * @param {number} status
- * @param {object} data
- * @return {Response}
- */
-export const failResponseHandler = (status, data) => {
-  switch (status) {
-    case 400:
-      return badRequest(data);
-    case 422:
-      return unprocessableEntity(data);
-    default:
-      return new Response(data, "Error", status);
-  }
 };
 
 /**

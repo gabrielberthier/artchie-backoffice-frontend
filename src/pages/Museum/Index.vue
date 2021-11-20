@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import { isSuccessfulResponse, makeSelection } from "src/services/http-base";
 import { defineComponent, onBeforeMount, ref } from "vue";
 import CarouselMuseum from "../../components/Carousel/Museum/CarouselMuseum.vue";
 import CreateMuseumDialog from "src/components/Dialogs/Museum/CreateMuseumDialog.vue";
+import { MuseumApiService } from "src/services/api";
 
 export default defineComponent({
   components: { CarouselMuseum, CreateMuseumDialog },
@@ -43,11 +43,11 @@ export default defineComponent({
     const museums = ref([]);
 
     const getMuseums = async () => {
-      const response = await makeSelection("api/museum/");
-
-      if (isSuccessfulResponse(response)) {
-        museums.value = response.data.data.items;
-      }
+      const service = new MuseumApiService();
+      service
+        .fetch()
+        .then((response) => (museums.value = response.data.data.items))
+        .catch(console.log);
     };
 
     onBeforeMount(getMuseums);
