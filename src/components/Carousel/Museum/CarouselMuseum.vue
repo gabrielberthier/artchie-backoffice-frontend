@@ -14,6 +14,8 @@
           :museum-name="x.name"
           :museum-email="x.email"
           :museum-info="x.info"
+          :museumDescription="x.description"
+          :museum-id="x.id"
         />
       </div>
     </swiper-slide>

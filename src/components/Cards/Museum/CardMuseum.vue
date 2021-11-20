@@ -59,10 +59,13 @@ export default defineComponent({
       type: String,
       default: require("assets/museums/louvre.jpg"),
     },
+    museumId: {
+      type: Number,
+    },
   },
   methods: {
     sendToInfo() {
-      this.$router.push({ name: "museumInfo", params: { id: "123" } });
+      this.$router.push({ name: "museumInfo", params: { id: this.museumId } });
     },
   },
 });

@@ -21,13 +21,21 @@
                     c0-3.866,3.134-7,7-7s7,3.134,7,7H5z"
         ></path>
       </svg> -->
-      <img
-        src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-museum-icon-for-personal-and-commercial-use-png-image_4341930.jpg"
-        alt=""
-      />
+      <img :src="museumImage" alt="" />
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    museumImage: {
+      type: String,
+      default: require("assets/museums/louvre.jpg"),
+    },
+  },
+};
+</script>
 
 <style scoped>
 .container__media {

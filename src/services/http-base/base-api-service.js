@@ -29,7 +29,8 @@ export default class BaseApiService {
    */
   async exec(callback, fields = null) {
     try {
-      const { data, status } = await callback();
+      const { data: responseData, status } = await callback();
+      const data = responseData.data;
       if (fields) {
         const bag = {};
         Object.keys(fields).forEach((f) => {

@@ -46,7 +46,7 @@ export default defineComponent({
       const service = new MuseumApiService();
       service
         .fetch()
-        .then((response) => (museums.value = response.data.data.items))
+        .then((response) => (museums.value = response.data.items))
         .catch(console.log);
     };
 
