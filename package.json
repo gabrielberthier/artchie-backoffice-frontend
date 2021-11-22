@@ -13,6 +13,7 @@
     "@quasar/extras": "^1.0.0",
     "@vuelidate/core": "^2.0.0-alpha.25",
     "@vuelidate/validators": "^2.0.0-alpha.21",
+    "aws-sdk": "^2.1033.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "crypto": "^1.0.1",

@@ -32,9 +32,10 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import ImageFiles from "../../Files/ImageFiles.vue";
 import { mapGetters } from "vuex";
+import { MarkerUploaderService } from "src/services/api/marker/marker-uploader-service";
 
 export default {
   components: { ImageFiles },
@@ -69,11 +70,8 @@ export default {
   methods: {
     async submitFile(file) {
       if (!file) return;
-      const response = await fileUpload("api/upload-file", this.token, file, {
-        params: {
-          prefix: "marker",
-        },
-      });
+      const service = new MarkerUploaderService(this.token);
+      const response = await service.uploadMarker(file);
       console.log(response);
     },
   },

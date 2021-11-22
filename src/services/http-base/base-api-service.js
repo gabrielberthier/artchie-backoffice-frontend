@@ -17,7 +17,7 @@ export default class BaseApiService {
   }
 
   getUrl(id = "") {
-    return `${this.basePath}/${this.resource}/${id}`;
+    return `${this.basePath}/${this.resource}/${id}/`;
   }
 
   /**

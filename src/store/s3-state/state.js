@@ -1,5 +1,6 @@
 export default function () {
   return {
-    key: process.env.VUE_APP_S3_SECRET || "",
+    accesKey: process.env.VUE_APP_S3_ACCESS_KEY || "",
+    secretKey: process.env.VUE_APP_S3_SECRET_KEY || "",
   };
 }

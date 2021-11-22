@@ -11,6 +11,8 @@
       <media-museum :museum-image="museum.image" />
     </div>
 
+    <div id="viewer" />
+
     <marker-table />
   </div>
 </template>
@@ -25,6 +27,7 @@ import MarkerTable from "src/components/Tables/Marker/MarkerTable.vue";
 import { MuseumApiService } from "src/services/api";
 import { reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { listObjectUrls } from "src/services/aws/get-objects-urls";
 
 export default {
   components: { CoolMuseumBg, MuseumContent, MediaMuseum, MarkerTable },
@@ -82,6 +85,9 @@ export default {
     return {
       museum,
     };
+  },
+  mounted() {
+    listObjectUrls();
   },
 };
 </script>

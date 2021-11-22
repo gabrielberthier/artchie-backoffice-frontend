@@ -45,7 +45,7 @@ export function onErrorInterceptor(store) {
     if (status === 401 && !isAlreadyFetchingAccessToken) {
       isAlreadyFetchingAccessToken = true;
 
-      const response = await api.get("/auth/refresh-token", {
+      const response = await api.get("/auth/refresh-token/", {
         withCredentials: true,
       });
 
