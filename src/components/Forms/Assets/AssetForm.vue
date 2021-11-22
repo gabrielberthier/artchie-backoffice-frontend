@@ -67,10 +67,14 @@ export default {
   computed: {
     ...mapGetters({ token: "auth/userToken" }),
   },
+  mounted() {
+    console.log(this.uuid);
+  },
+  inject: ["uuid"],
   methods: {
     async submitFile(file) {
       if (!file) return;
-      const service = new MarkerUploaderService(this.token);
+      const service = new MarkerUploaderService(this.token, this.uuid);
       const response = await service.uploadMarker(file);
       console.log(response);
     },

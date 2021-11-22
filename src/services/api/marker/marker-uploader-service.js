@@ -1,11 +1,17 @@
 import ResourceUploaderService from "../../http-base/resource-uploader-service";
 
 export class MarkerUploaderService extends ResourceUploaderService {
-  constructor(token) {
+  constructor(token, museumUuid) {
     super("upload-file");
     this.token = token;
+    this.museum = museumUuid;
   }
 
+  /**
+   *
+   * @param {File} file
+   * @returns
+   */
   async uploadMarker(file) {
     const config = {
       headers: {
@@ -13,7 +19,7 @@ export class MarkerUploaderService extends ResourceUploaderService {
         Authorization: `Bearer ${this.token}`,
       },
       params: {
-        prefix: "marker",
+        prefix: `${this.museum}/marker`,
       },
     };
 

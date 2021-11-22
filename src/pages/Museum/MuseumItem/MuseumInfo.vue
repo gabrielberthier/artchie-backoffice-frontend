@@ -18,69 +18,31 @@
 </template>
 
 <script>
-import { useQuasar } from "quasar";
-import { QSpinnerGears, QSpinnerRadio } from "quasar";
 import CoolMuseumBg from "./CoolMuseumBg.vue";
 import MuseumContent from "./MuseumContent.vue";
 import MediaMuseum from "./MediaMuseum.vue";
 import MarkerTable from "src/components/Tables/Marker/MarkerTable.vue";
-import { MuseumApiService } from "src/services/api";
-import { reactive } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { listObjectUrls } from "src/services/aws/get-objects-urls";
+import { useRoute } from "vue-router";
+import { setupService } from "./functions/setup-service";
+import { reactive, computed } from "vue";
 
 export default {
   components: { CoolMuseumBg, MuseumContent, MediaMuseum, MarkerTable },
   setup() {
-    const isOnline = window.navigator.onLine;
-    const $q = useQuasar();
-
-    const museum = reactive({
+    let museum = reactive({
       name: "",
       mail: "",
       info: "",
       description: "",
       image: "",
+      uuid: "",
     });
 
-    const service = new MuseumApiService();
     const route = useRoute();
-    const router = useRouter();
-
-    $q.loading.show({
-      message: isOnline
-        ? "Loading your user information..."
-        : "Looks like you've lost network connectivity. Please connect back to your network to access your data.",
-      backgroundColor: isOnline ? "grey" : "red-6",
-      spinner: isOnline ? QSpinnerGears : QSpinnerRadio,
-      customClass: "loader",
-    });
-
-    service
-      .get(route.params.id)
-      .then((response) => {
-        if (!response) {
-          console.log("Teste");
-          $q.dialog({
-            title: "Error",
-            message: "O museu não existe",
-            class: "negative",
-          }).onDismiss(() => router.push("/intern/museums"));
-        }
-        museum.name = response.name;
-        museum.mail = response.email;
-        museum.info = response.info;
-        museum.description = response.description;
-        museum.image = "";
-      })
-      .catch(({ data }) =>
-        $q.dialog({
-          title: "Error",
-          message: data,
-          class: "negative",
-        })
-      )
-      .finally($q.loading.hide());
+    setupService(route.params.id).then((response) =>
+      Object.assign(museum, response)
+    );
 
     return {
       museum,
@@ -88,6 +50,11 @@ export default {
   },
   mounted() {
     listObjectUrls();
+  },
+  provide() {
+    return {
+      uuid: computed(() => this.museum.uuid),
+    };
   },
 };
 </script>

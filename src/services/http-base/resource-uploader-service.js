@@ -5,6 +5,9 @@ export default class ResourceUploaderService extends BaseApiService {
     super(resource);
   }
 
+  /**
+   * @param {File} file
+   */
   async upload(file, configs = {}) {
     const formData = new FormData();
     formData.append(file.name, file);
