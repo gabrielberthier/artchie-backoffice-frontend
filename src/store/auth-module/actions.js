@@ -49,16 +49,12 @@ export async function verifyAccess({ commit, state }) {
 export async function setUserUp({ commit, state }) {
   const { user } = state;
 
-  console.log(user);
-
   if (!user) {
     const response = await api.get("/auth/refresh-token", {
       withCredentials: true,
     });
 
     const authToken = response.headers["x-renew-token"];
-
-    console.log(authToken);
 
     if (authToken) {
       commit("SET_USER_DATA", authToken);

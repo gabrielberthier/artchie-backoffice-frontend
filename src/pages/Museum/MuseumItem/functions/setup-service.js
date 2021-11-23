@@ -21,7 +21,6 @@ export const setupService = async (id) => {
   try {
     const response = await service.get(id);
     if (!response) {
-      console.log("Teste");
       $q.dialog({
         title: "Error",
         message: "O museu não existe",

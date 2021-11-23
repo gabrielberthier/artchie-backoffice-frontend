@@ -53,8 +53,6 @@ export default {
       this.$emit("update:modelValue", event);
     },
     closeDialogOnSuccess() {
-      console.log("Called at create Museum Dialog");
-
       this.$emit("successful-insertion", true);
     },
   },

@@ -20,10 +20,6 @@ export default {
       },
     };
   },
-
-  mounted() {
-    console.log(this.$store.getters["s3/key"]);
-  },
 };
 </script>
 

@@ -1,4 +1,4 @@
-import { MarkerModel } from "src/components/Forms/Assets/models";
+import { Asset, MarkerModel } from "src/components/Forms/Assets/models";
 import ModelApiService from "src/services/http-base/model-api-service";
 import { default as BaseApiService } from "../../http-base/base-api-service";
 import { PlacementObjectUploaderService } from "./placement-object/pose-object-uploader-service";
@@ -23,7 +23,7 @@ export class IncludeMarkerService extends BaseApiService {
   }
 
   /**
-   *
+   * @param {Number} museumId
    * @param {MarkerModel} data
    * @param {File} markerFile
    * @param {File} placementObjectFile
@@ -40,17 +40,31 @@ export class IncludeMarkerService extends BaseApiService {
       if (Array.isArray(returnFiles)) {
         const [markerAsset, posedObjectAsset] = returnFiles;
 
-        console.log(markerAsset);
-
-        data.asset = markerAsset.data;
-        data.pose_object.asset = posedObjectAsset.data;
+        const { pose_object, ...marker } = data;
+        pose_object.asset = this.convertAssetToModel(posedObjectAsset.data);
+        marker.asset = this.convertAssetToModel(markerAsset.data);
 
         return this.exec(async () =>
-          this.api.post(this.getUrl(), { museum_id: museumId, ...data })
+          this.api.post(this.getUrl(), {
+            museum_id: museumId,
+            marker,
+            pose_object,
+          })
         );
       }
     } catch (error) {
       throw this.handleErrors(error);
     }
+  }
+
+  convertAssetToModel(asset) {
+    const name = asset.fileName.split("/")[1];
+    return new Asset(
+      name,
+      asset.mimeType,
+      asset.fileName,
+      asset.URL,
+      asset.originalName
+    );
   }
 }

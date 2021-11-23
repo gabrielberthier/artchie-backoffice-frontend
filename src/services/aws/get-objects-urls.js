@@ -13,9 +13,5 @@ export function listObjectUrls() {
       const photoKey = photo.Key;
       return bucketUrl + encodeURIComponent(photoKey);
     });
-
-    console.log(mapped);
   });
-
-  console.log(response);
 }

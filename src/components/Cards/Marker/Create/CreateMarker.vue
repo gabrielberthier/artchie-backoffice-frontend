@@ -6,7 +6,7 @@
   >
     <q-card class="create-marker-card">
       <div class="q-pa-md">
-        <asset-form />
+        <asset-form @close-dialog="updateModelValue(false)" />
       </div>
 
       <marker-card-actions />

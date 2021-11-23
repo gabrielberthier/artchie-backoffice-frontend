@@ -29,7 +29,6 @@ export default class BaseApiService {
    */
   async exec(callback, fields = null) {
     try {
-      console.log("Called here");
       const { data: responseData, status } = await callback();
       const data = responseData.data;
       if (fields) {

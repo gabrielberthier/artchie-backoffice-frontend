@@ -8,6 +8,7 @@
     v-model="model"
     label="Asset"
     counter
+    ref="fileupload"
   >
     <template v-slot:prepend>
       <q-icon name="cloud_upload" />
@@ -31,6 +32,12 @@ export default {
      */
     model(newValue, oldValue) {
       this.$emit("filechanged", newValue);
+    },
+  },
+  methods: {
+    cleanInput() {
+      this.model = null;
+      this.$refs.fileupload.value = null;
     },
   },
 };

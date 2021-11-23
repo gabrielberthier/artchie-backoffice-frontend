@@ -40,7 +40,7 @@
       lazy-rules
     />
 
-    <image-files @filechanged="addMarkerAsset" />
+    <image-files @filechanged="addMarkerAsset" ref="fileMarker" />
 
     <div
       class="q-form-section-break q-form-builder-element"
@@ -66,7 +66,7 @@
       :rules="[(val) => (val && val.length > 0) || 'Please type something']"
     />
 
-    <image-files @filechanged="addObjectAsset" />
+    <image-files @filechanged="addObjectAsset" ref="filePlacementObject" />
 
     <div>
       <q-btn label="Submit" type="submit" color="primary" />
@@ -85,18 +85,28 @@ import { useStore } from "vuex";
 
 export default {
   components: { ImageFiles },
-  setup() {
+  setup(props, { emit }) {
     const $q = useQuasar();
     const markerAsset = ref(null);
     const poseAsset = ref(null);
     const uuid = inject("uuid", "");
     const museumId = inject("museumId");
     const markerModel = makeMarkerModel();
+    const filePlacementObject = ref(null);
+    const fileMarker = ref(null);
 
     const store = useStore();
 
     const marker = reactive({ ...markerModel });
     const token = computed(() => store.getters["auth/userToken"]);
+
+    const onReset = () => {
+      Object.assign(marker, { ...markerModel });
+      markerAsset.value = null;
+      poseAsset.value = null;
+      filePlacementObject.value.cleanInput();
+      fileMarker.value.cleanInput();
+    };
 
     return {
       marker,
@@ -118,12 +128,23 @@ export default {
             markerAsset.value,
             poseAsset.value
           );
-          $q.notify({
-            color: "green-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Submitted",
-          });
+          if (response) {
+            $q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Submitted!",
+            });
+            onReset();
+            emit("close-dialog");
+          } else {
+            $q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "close",
+              message: "Missing values!",
+            });
+          }
         } catch (error) {
           $q.dialog({
             title: "Error",
@@ -132,15 +153,10 @@ export default {
           });
         }
       },
-
-      onReset() {
-        Object.assign(marker, { markerModel });
-      },
+      filePlacementObject,
+      fileMarker,
+      onReset,
     };
-  },
-
-  mounted() {
-    console.log(this.uuid);
   },
 };
 </script>

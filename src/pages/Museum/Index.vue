@@ -59,7 +59,6 @@ export default defineComponent({
       getMuseums,
       openFormDialog,
       updateDialog() {
-        console.log("Chamado");
         openFormDialog.value = false;
         getMuseums();
       },
