@@ -27,26 +27,27 @@
         />
       </template>
       <template v-slot:body="props">
-        <q-tr :props="props">
+        <q-tr :props="props" v-if="hasMarkers">
           <q-td key="asset" :props="props" @click="openCard">
-            <q-skeleton type="circle" />
+            <q-avatar size="45px" class="shadow-10">
+              <img :src="props.row.asset" />
+            </q-avatar>
           </q-td>
           <q-td key="markerName" :props="props">
-            <!-- {{ props.row.markerName }} -->
-            <q-skeleton type="text" />
+            {{ props.row.markerName }}
           </q-td>
           <q-td key="text" :props="props">
-            <!-- {{ props.row.text }} -->
-            <q-skeleton type="text" />
+            {{ props.row.text }}
           </q-td>
           <q-td key="title" :props="props">
-            <!-- {{ props.row.title }} -->
-            <q-skeleton type="text" />
+            {{ props.row.title }}
           </q-td>
           <q-td key="path" :props="props">
-            <!-- {{ props.row.path }} -->
-            <q-skeleton type="text" />
+            {{ props.row.path }}
           </q-td>
+        </q-tr>
+        <q-tr v-else>
+          <marker-table-skeletons />
         </q-tr>
       </template>
     </q-table>
@@ -57,22 +58,60 @@
 </template>
 
 <script>
-import { ref, reactive } from "vue";
-import { rows } from "./mock/rows";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 import { columns } from "./mock/columns";
 import MarkerCard from "src/components/Cards/Marker/SubjectInformation/MarkerCard.vue";
-
+import MarkerTableSkeletons from "./MarkerTableSkeletons.vue";
 import CreateMarker from "src/components/Cards/Marker/Create/CreateMarker.vue";
+import { MarkerApiService } from "src/services/api/marker";
+import { createPresignedUrl } from "src/services/aws/get-objects-urls";
 
 export default {
-  components: { MarkerCard, CreateMarker },
+  components: {
+    MarkerCard,
+    CreateMarker,
+    MarkerTableSkeletons,
+  },
+  props: {
+    museumId: {
+      type: Number,
+    },
+  },
+  setup(props) {
+    const hasMarkers = computed(() => !!markers.value.length);
+    const markers = ref([]);
+    const rows = computed(() => {
+      return markers.value.map((marker) => ({
+        asset: createPresignedUrl(marker.asset.path),
+        markerName: marker.name,
+        text: marker.dataInfo.text,
+        title: marker.dataInfo.title,
+        path: marker.asset.path,
+      }));
+    });
 
-  setup() {
+    const getMarkers = async (museumId) => {
+      const service = new MarkerApiService();
+      const data = await service.fetchByMuseumId(museumId);
+      console.log(data);
+      markers.value = data.items;
+    };
+
+    watch(
+      () => props.museumId,
+      (value, second) => {
+        if (value) {
+          getMarkers(props.museumId);
+        }
+      }
+    );
+
     return {
       columns: reactive(columns),
-      rows: reactive(rows),
+      rows,
       card: ref(false),
       markerCreator: ref(false),
+      hasMarkers,
     };
   },
   methods: {

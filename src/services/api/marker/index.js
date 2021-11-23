@@ -8,6 +8,10 @@ export class MarkerApiService extends ModelApiService {
   constructor() {
     super("marker");
   }
+
+  async fetchByMuseumId(museumId) {
+    return this.get(`museum/${museumId}`);
+  }
 }
 
 export class IncludeMarkerService extends BaseApiService {

@@ -13,7 +13,7 @@
 
     <div id="viewer" />
 
-    <marker-table />
+    <marker-table :museum-id="museum.id" />
   </div>
 </template>
 
@@ -22,10 +22,9 @@ import CoolMuseumBg from "./CoolMuseumBg.vue";
 import MuseumContent from "./MuseumContent.vue";
 import MediaMuseum from "./MediaMuseum.vue";
 import MarkerTable from "src/components/Tables/Marker/MarkerTable.vue";
-import { listObjectUrls } from "src/services/aws/get-objects-urls";
 import { useRoute } from "vue-router";
 import { setupService } from "./functions/setup-service";
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 
 export default {
   components: { CoolMuseumBg, MuseumContent, MediaMuseum, MarkerTable },
@@ -39,6 +38,7 @@ export default {
       image: "",
       uuid: "",
     });
+    const markers = ref([]);
 
     const route = useRoute();
     setupService(route.params.id).then((response) =>
@@ -47,10 +47,8 @@ export default {
 
     return {
       museum,
+      markers,
     };
-  },
-  mounted() {
-    listObjectUrls();
   },
   provide() {
     return {

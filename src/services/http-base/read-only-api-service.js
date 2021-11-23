@@ -12,6 +12,6 @@ export default class ReadOnlyApiService extends BaseApiService {
 
   async get(id) {
     const { data } = await this.exec(async () => this.api.get(this.getUrl(id)));
-    return data.museum;
+    return data;
   }
 }
