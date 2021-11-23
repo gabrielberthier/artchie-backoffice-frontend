@@ -6,7 +6,7 @@
   >
     <q-card class="create-marker-card">
       <div class="q-pa-md">
-        <asset-form @close-dialog="updateModelValue(false)" />
+        <asset-form @close-dialog="submittedSuccessfully" />
       </div>
 
       <marker-card-actions />
@@ -40,6 +40,9 @@ export default {
   methods: {
     updateModelValue(event) {
       this.$emit("update:modelValue", event);
+    },
+    submittedSuccessfully() {
+      this.$emit("success-created");
     },
   },
   watch: {

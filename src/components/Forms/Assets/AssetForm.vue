@@ -136,7 +136,7 @@ export default {
               message: "Submitted!",
             });
             onReset();
-            emit("close-dialog");
+            emit("close-dialog", response);
           } else {
             $q.notify({
               color: "red-5",

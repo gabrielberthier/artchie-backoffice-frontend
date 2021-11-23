@@ -53,7 +53,7 @@
     </q-table>
 
     <marker-card v-model="card" />
-    <create-marker v-model="markerCreator" />
+    <create-marker v-model="markerCreator" @success-created="insertMarker" />
   </div>
 </template>
 
@@ -93,7 +93,7 @@ export default {
     const getMarkers = async (museumId) => {
       const service = new MarkerApiService();
       const data = await service.fetchByMuseumId(museumId);
-      console.log(data);
+
       markers.value = data.items;
     };
 
@@ -112,6 +112,7 @@ export default {
       card: ref(false),
       markerCreator: ref(false),
       hasMarkers,
+      getMarkers,
     };
   },
   methods: {
@@ -120,6 +121,9 @@ export default {
     },
     openMarkerCreatorCard() {
       this.markerCreator = true;
+    },
+    insertMarker() {
+      this.getMarkers(this.museumId);
     },
   },
 };
