@@ -29,6 +29,7 @@ export default class BaseApiService {
    */
   async exec(callback, fields = null) {
     try {
+      console.log("Called here");
       const { data: responseData, status } = await callback();
       const data = responseData.data;
       if (fields) {
@@ -66,6 +67,7 @@ export default class BaseApiService {
       );
     } else {
       console.log("Error", error.message);
+      console.log(error.stack);
       return this.failResponseHandler(null, error.message);
     }
   }

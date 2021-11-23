@@ -31,6 +31,7 @@ export default {
   components: { CoolMuseumBg, MuseumContent, MediaMuseum, MarkerTable },
   setup() {
     let museum = reactive({
+      id: undefined,
       name: "",
       mail: "",
       info: "",
@@ -54,6 +55,7 @@ export default {
   provide() {
     return {
       uuid: computed(() => this.museum.uuid),
+      museumId: computed(() => this.museum.id),
     };
   },
 };
