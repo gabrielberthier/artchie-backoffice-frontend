@@ -1,11 +1,8 @@
 <template>
   <q-card-section class="q-pt-none">
-    <div class="text-subtitle1">An awesome asset</div>
+    <div class="text-subtitle1">{{ title }}</div>
     <div class="text-caption text-grey card-info-text">
-      Qui butcher farm-to-table locavore sunt quinoa. Bicycle rights pariatur
-      marfa etsy, four loko lomo veniam fashion axe aesthetic. Actually irony
-      quis selfies readymade narwhal. Nesciunt pinterest cillum, wolf swag
-      american apparel carles ex butcher non veniam.
+      {{ text }}
     </div>
 
     <div class="row no-wrap items-center">
@@ -26,6 +23,14 @@ export default {
     modelValue: {
       type: Boolean,
       default: true,
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+    text: {
+      type: String,
+      default: "",
     },
   },
   emits: ["update:modelValue"],

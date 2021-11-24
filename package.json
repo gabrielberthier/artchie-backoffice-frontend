@@ -20,6 +20,7 @@
     "js-file-download": "^0.4.12",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
+    "mime-types": "^2.1.34",
     "quasar": "^2.0.0",
     "stream": "^0.0.2",
     "swiper": "^7.0.2",

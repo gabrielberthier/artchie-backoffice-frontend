@@ -6,16 +6,23 @@
   >
     <q-card class="my-card">
       <q-img
-        src="https://64.media.tumblr.com/tumblr_ljs1vbcL1K1qa5yk4o1_500.jpg"
+        :src="markerElement?.asset?.temporary_location"
         fit="cover"
         style="height: 300px"
       />
 
-      <heading-marker-card />
+      <heading-marker-card :asset-name="markerElement.marker_name" />
 
-      <body-marker-card v-model="activeAsset" />
+      <body-marker-card
+        v-model="activeAsset"
+        :title="markerElement.marker_title"
+        :text="markerElement.marker_text"
+      />
 
-      <placement-object-section v-if="hasPlacement" />
+      <placement-object-section
+        v-if="hasPlacement"
+        :placement-object="markerElement.pose_object"
+      />
 
       <q-separator />
 
@@ -25,11 +32,14 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch, reactive, computed } from "vue";
 import PlacementObjectSection from "./Sections/PlacementObjectSection.vue";
 import BodyMarkerCard from "./Sections/BodyMarkerCard.vue";
 import MarkerCardActions from "../Subs/MarkerCardActions.vue";
 import HeadingMarkerCard from "./Sections/HeadingMarkerCard.vue";
+import { makeMarkerModel } from "src/components/Forms/Assets/functions/marker-model-factory";
+import { MarkerApiService } from "src/services/api/marker";
+import { convertResponseToModelMarker } from "./convert-response-to-marker-model";
 
 export default {
   components: {
@@ -38,13 +48,34 @@ export default {
     MarkerCardActions,
     HeadingMarkerCard,
   },
-  setup() {
+  setup(props) {
+    const markerModel = makeMarkerModel();
+    const markerElement = reactive({ ...markerModel });
+
+    const setupMarker = async (marker) => {
+      const service = new MarkerApiService();
+      const response = await service.get(marker);
+      Object.assign(markerElement, {
+        ...convertResponseToModelMarker(response),
+      });
+    };
+
+    watch(
+      () => props.marker,
+      (value, second) => {
+        if (value) {
+          setupMarker(props.marker);
+        }
+      }
+    );
+
     return {
-      hasPlacement: ref(true),
+      hasPlacement: computed(() => !!markerElement?.pose_object),
       stars: ref(3),
       card: ref(false),
       activeAsset: ref(false),
       expanded: ref(false),
+      markerElement,
     };
   },
   emits: ["update:modelValue"],
@@ -52,6 +83,9 @@ export default {
     modelValue: {
       type: Boolean,
       default: false,
+    },
+    marker: {
+      type: Number,
     },
   },
   computed: {

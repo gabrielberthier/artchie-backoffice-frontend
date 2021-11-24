@@ -3,6 +3,7 @@ import ModelApiService from "src/services/http-base/model-api-service";
 import { default as BaseApiService } from "../../http-base/base-api-service";
 import { PlacementObjectUploaderService } from "./placement-object/pose-object-uploader-service";
 import { MarkerUploaderService } from "./marker-uploader-service";
+import mimeType from "mime-types";
 
 export class MarkerApiService extends ModelApiService {
   constructor() {
@@ -63,12 +64,9 @@ export class IncludeMarkerService extends BaseApiService {
 
   convertAssetToModel(asset) {
     const name = asset.fileName.split("/")[1];
-    return new Asset(
-      name,
-      asset.mimeType,
-      asset.fileName,
-      asset.URL,
-      asset.originalName
-    );
+    console.log(name);
+    let type = asset.mimeType ?? mimeType.lookup(name);
+    type = type ? type : "text/plain";
+    return new Asset(name, type, asset.fileName, asset.URL, asset.originalName);
   }
 }

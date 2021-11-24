@@ -28,16 +28,20 @@
       </template>
       <template v-slot:body="props">
         <q-tr :props="props" v-if="hasMarkers">
-          <q-td key="asset" :props="props" @click="openCard">
-            <q-avatar size="45px" class="shadow-10">
+          <q-td key="asset" :props="props">
+            <q-avatar
+              size="45px"
+              class="shadow-10"
+              @click="openCard(props.row.id)"
+            >
               <img :src="props.row.asset" />
             </q-avatar>
           </q-td>
           <q-td key="markerName" :props="props">
             {{ props.row.markerName }}
           </q-td>
-          <q-td key="text" :props="props">
-            {{ props.row.text }}
+          <q-td key="text" :props="props" class="ellipsis">
+            {{ truncateText(props.row.text) }}
           </q-td>
           <q-td key="title" :props="props">
             {{ props.row.title }}
@@ -52,7 +56,7 @@
       </template>
     </q-table>
 
-    <marker-card v-model="card" />
+    <marker-card v-model="card" :marker="selectedMarker" />
     <create-marker v-model="markerCreator" @success-created="insertMarker" />
   </div>
 </template>
@@ -80,8 +84,10 @@ export default {
   setup(props) {
     const hasMarkers = computed(() => !!markers.value.length);
     const markers = ref([]);
+    const selectedMarker = ref(null);
     const rows = computed(() => {
       return markers.value.map((marker) => ({
+        id: marker.id,
         asset: createPresignedUrl(marker.asset.path),
         markerName: marker.name,
         text: marker.dataInfo.text,
@@ -113,17 +119,26 @@ export default {
       markerCreator: ref(false),
       hasMarkers,
       getMarkers,
+      selectedMarker,
     };
   },
   methods: {
-    openCard() {
+    openCard(markerId) {
       this.card = true;
+      this.selectedMarker = markerId;
     },
     openMarkerCreatorCard() {
       this.markerCreator = true;
     },
     insertMarker() {
       this.getMarkers(this.museumId);
+    },
+    /**
+     * @param {String}
+     */
+    truncateText(str) {
+      if (str.length < 45) return str;
+      return str.substring(0, 45) + "...";
     },
   },
 };
