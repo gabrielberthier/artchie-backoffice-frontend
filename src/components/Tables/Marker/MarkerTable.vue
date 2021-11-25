@@ -55,16 +55,13 @@
         </q-tr>
       </template>
     </q-table>
-
-    <marker-card v-model="card" :marker="selectedMarker" />
     <create-marker v-model="markerCreator" @success-created="insertMarker" />
   </div>
 </template>
 
 <script>
-import { ref, reactive, computed, onMounted, watch } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { columns } from "./mock/columns";
-import MarkerCard from "src/components/Cards/Marker/SubjectInformation/MarkerCard.vue";
 import MarkerTableSkeletons from "./MarkerTableSkeletons.vue";
 import CreateMarker from "src/components/Cards/Marker/Create/CreateMarker.vue";
 import { MarkerApiService } from "src/services/api/marker";
@@ -72,7 +69,6 @@ import { createPresignedUrl } from "src/services/aws/get-objects-urls";
 
 export default {
   components: {
-    MarkerCard,
     CreateMarker,
     MarkerTableSkeletons,
   },
@@ -115,7 +111,6 @@ export default {
     return {
       columns: reactive(columns),
       rows,
-      card: ref(false),
       markerCreator: ref(false),
       hasMarkers,
       getMarkers,
@@ -124,8 +119,7 @@ export default {
   },
   methods: {
     openCard(markerId) {
-      this.card = true;
-      this.selectedMarker = markerId;
+      this.$router.push({ name: "markerPage", params: { id: markerId } });
     },
     openMarkerCreatorCard() {
       this.markerCreator = true;

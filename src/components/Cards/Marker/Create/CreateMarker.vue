@@ -16,7 +16,7 @@
 
 <script>
 import { reactive } from "vue";
-import MarkerCardActions from "../Subs/MarkerCardActions.vue";
+import MarkerCardActions from "../ActionButtons/MarkerCardActions.vue";
 import AssetForm from "src/components/Forms/Assets/AssetForm.vue";
 
 export default {

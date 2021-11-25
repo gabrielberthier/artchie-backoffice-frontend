@@ -79,9 +79,9 @@
 import { useQuasar } from "quasar";
 import { reactive, ref, inject, computed } from "vue";
 import ImageFiles from "../../Files/ImageFiles.vue";
-import { submitMarkerUseCase } from "./functions/submit-marker";
-import { makeMarkerModel } from "./functions/marker-model-factory";
 import { useStore } from "vuex";
+import { submitMarkerUseCase } from "src/services/use-cases/submit-marker";
+import { makeMarkerModel } from "src/domain/marker/marker-model-factory";
 
 export default {
   components: { ImageFiles },

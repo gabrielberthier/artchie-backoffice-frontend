@@ -1,9 +1,9 @@
-import { Asset, MarkerModel } from "src/components/Forms/Assets/models";
 import ModelApiService from "src/services/http-base/model-api-service";
 import { default as BaseApiService } from "../../http-base/base-api-service";
 import { PlacementObjectUploaderService } from "./placement-object/pose-object-uploader-service";
 import { MarkerUploaderService } from "./marker-uploader-service";
-import mimeType from "mime-types";
+import { convertIncludedAssetIntoModel } from "src/domain/asset/convert-response-to-asset-model";
+import { MarkerModel } from "src/domain/marker/marker-models";
 
 export class MarkerApiService extends ModelApiService {
   constructor() {
@@ -46,8 +46,10 @@ export class IncludeMarkerService extends BaseApiService {
         const [markerAsset, posedObjectAsset] = returnFiles;
 
         const { pose_object, ...marker } = data;
-        pose_object.asset = this.convertAssetToModel(posedObjectAsset.data);
-        marker.asset = this.convertAssetToModel(markerAsset.data);
+        pose_object.asset = convertIncludedAssetIntoModel(
+          posedObjectAsset.data
+        );
+        marker.asset = convertIncludedAssetIntoModel(markerAsset.data);
 
         return this.exec(async () =>
           this.api.post(this.getUrl(), {
@@ -60,13 +62,5 @@ export class IncludeMarkerService extends BaseApiService {
     } catch (error) {
       throw this.handleErrors(error);
     }
-  }
-
-  convertAssetToModel(asset) {
-    const name = asset.fileName.split("/")[1];
-    console.log(name);
-    let type = asset.mimeType ?? mimeType.lookup(name);
-    type = type ? type : "text/plain";
-    return new Asset(name, type, asset.fileName, asset.URL, asset.originalName);
   }
 }
