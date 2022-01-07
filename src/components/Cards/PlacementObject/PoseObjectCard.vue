@@ -19,17 +19,11 @@
         <q-tooltip> Delete object </q-tooltip>
       </q-icon>
     </q-img>
-    <q-img v-else src="~assets/3d-model.png" fit="cover">
-      <q-icon
-        class="absolute all-pointer-events"
-        size="32px"
-        name="delete"
-        color="negative"
-        style="top: 8px; left: 8px; cursor: pointer"
-      >
-        <q-tooltip> Delete object </q-tooltip>
-      </q-icon>
-    </q-img>
+    <three-holder
+      :objectPath="placementObject?.asset?.temporary_location"
+      :object-name="placementObject?.asset?.path"
+      v-else
+    />
 
     <q-card-section>
       <div class="text-subtitle1">File name:</div>
@@ -54,8 +48,10 @@
 
 <script>
 import { ref } from "vue";
+import ThreeHolder from "src/components/3D/ThreeHolder.vue";
 
 export default {
+  components: { ThreeHolder },
   setup() {
     return {
       active: ref(true),
