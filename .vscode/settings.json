@@ -8,5 +8,6 @@
     "vue"
   ],
   "vetur.experimental.templateInterpolationService": false,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }

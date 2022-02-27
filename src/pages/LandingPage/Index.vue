@@ -1,5 +1,5 @@
 <template>
-  <div class="body-wrap boxed-container">
+  <div class="body-wrap">
     <landing-header />
 
     <main>

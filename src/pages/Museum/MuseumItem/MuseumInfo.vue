@@ -9,9 +9,14 @@
         :museum-description="museum.description"
       />
       <media-museum :museum-image="museum.image" />
+      <q-btn fab icon="key" color="accent" class="key-gen-btn" @click="generateKey">
+        <q-tooltip anchor="top left" self="top middle">
+          Click to generate app access key
+        </q-tooltip>
+      </q-btn>
     </div>
 
-    <div id="viewer" />
+    <a id="viewer" href="#" ref="downloader" />
 
     <marker-table :museum-id="museum.id" />
   </div>
@@ -24,11 +29,15 @@ import MediaMuseum from "./MediaMuseum.vue";
 import MarkerTable from "src/components/Tables/Marker/MarkerTable.vue";
 import { useRoute } from "vue-router";
 import { setupService } from "./functions/setup-service";
-import { reactive, computed, ref } from "vue";
+import { reactive, computed, ref, onMounted } from "vue";
+import { downloadFile } from "./functions/download-file";
+import { AppKeyCreatorService } from "src/services/api/security";
+import { useQuasar } from "quasar";
 
 export default {
   components: { CoolMuseumBg, MuseumContent, MediaMuseum, MarkerTable },
   setup() {
+    const $q = useQuasar();
     let museum = reactive({
       id: undefined,
       name: "",
@@ -40,14 +49,37 @@ export default {
     });
     const markers = ref([]);
 
+    const downloader = ref(null);
+
+    const generateKey = async () => {
+      try {
+        const service = new AppKeyCreatorService();
+        const { data } = await service.makeKey(museum.uuid);
+        downloadFile(downloader.value, data.token);
+        $q.notify({
+          color: "green-4",
+          textColor: "white",
+          icon: "cloud_done",
+          message: "API Key downloaded",
+        });
+      } catch (error) {
+        $q.notify({
+          color: "red",
+          textColor: "white",
+          icon: "cloud_off",
+          message: "Museum code is invalid",
+        });
+      }
+    };
+
     const route = useRoute();
-    setupService(route.params.id).then((response) =>
-      Object.assign(museum, response)
-    );
+    setupService(route.params.id).then((response) => Object.assign(museum, response));
 
     return {
       museum,
       markers,
+      downloader,
+      generateKey,
     };
   },
   provide() {
@@ -74,6 +106,13 @@ export default {
   overflow: hidden;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: 0.2s ease-in;
+}
+
+.key-gen-btn {
+  z-index: 1000;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .container:hover {

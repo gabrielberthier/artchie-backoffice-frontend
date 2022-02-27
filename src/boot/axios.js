@@ -3,7 +3,8 @@ import axios from "axios";
 import { intercept } from "src/services/auth/interceptors";
 
 axios.defaults.withCredentials = true;
-const baseURL = "https://artchie-back-end.herokuapp.com/";
+
+const baseURL = process.env.BACKEND_URL;
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;

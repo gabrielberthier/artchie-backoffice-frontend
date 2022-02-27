@@ -67,7 +67,7 @@ export default {
         const { name, email, info, description } = data;
         const service = new MuseumApiService();
         try {
-          const response = await service.post({
+          await service.post({
             name,
             email,
             info,
@@ -85,7 +85,7 @@ export default {
             color: "red",
             textColor: "white",
             icon: "cancel",
-            message: response.data,
+            message: error.data,
           });
         }
       },
