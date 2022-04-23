@@ -24,7 +24,7 @@
         />
       </q-card>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
       <pose-object-card :placement-object="marker.pose_object" />
     </div>
   </div>

@@ -9,9 +9,7 @@ export default {
   setup(props) {
     const canvas = ref(null);
     const extension = computed(() => props.objectName.split(".").pop());
-    onMounted(() =>
-      create3dCanvas(canvas.value, props.objectPath, extension.value)
-    );
+    onMounted(() => create3dCanvas(canvas.value, props.objectPath, extension.value));
 
     return {
       canvas,
@@ -30,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#canvas {
-  height: 300px;
+#canvas ::v-deep(canvas) {
+  margin: 0 auto !important;
 }
 </style>
