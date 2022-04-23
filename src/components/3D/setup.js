@@ -15,6 +15,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
  * @param {HTMLElement} element
  */
 export const create3dCanvas = (element, objectPath, extension) => {
+  console.log("BATATA");
   const scene = new Scene();
 
   const camera = new PerspectiveCamera(50, 300 / 300, 0.1, 2000);
@@ -49,10 +50,17 @@ export const create3dCanvas = (element, objectPath, extension) => {
   const objLoader = createLoader(extension);
 
   objLoader.load(objectPath, function (element) {
-    scene.add(element);
-    object.position.y = 0;
-    object.position.x = 50;
-    object.position.z = 50;
+    if(extension === "glb" || extension === "gltf"){
+      const gltfScene = element.scene;  
+      gltfScene.scale.set(2, 2, 2);
+      gltfScene.position.y = 4;
+      scene.add(gltfScene);
+    }else{
+      scene.add(element);
+      element.position.y = 0;
+      element.position.x = 50;
+      element.position.z = 50;
+    }
   });
 
   const animate = function () {
