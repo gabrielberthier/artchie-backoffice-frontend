@@ -44,7 +44,8 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: "hash", // available values: 'hash', 'history'
+      vueRouterMode: "hash", // available values: 'hash', 'history',
+      distDir: ctx.mode.spa ? 'public' : null,
       env: require("dotenv").config().parsed,
       extendWebpack(cfg) {
         cfg.plugins.push(new NodePolyfillPlugin({}));
