@@ -23,10 +23,10 @@ export const createPresignedUrl = (path) => {
   const s3bucket = new AWS.S3({
     accessKeyId: process.env.VUE_APP_S3_ACCESS_KEY,
     secretAccessKey: process.env.VUE_APP_S3_SECRET_KEY,
-    Bucket: process.env.AWS_BUCKET,
+    Bucket: process.env.VUE_AWS_BUCKET,
   });
   const url = s3bucket.getSignedUrl("getObject", {
-    Bucket: process.env.AWS_BUCKET,
+    Bucket: process.env.VUE_AWS_BUCKET,
     Key: `thumb-${path}`,
     Expires: 300,
   });
