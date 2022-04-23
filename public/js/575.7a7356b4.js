@@ -1,0 +1,1 @@
+"use strict";(self["webpackChunkbackoffice_artchie_front"]=self["webpackChunkbackoffice_artchie_front"]||[]).push([[575],{93575:(e,n,a)=>{a.r(n),a.d(n,{default:()=>o});var c=a(83673);function r(e,n,a,r,t,f){return(0,c.wg)(),(0,c.iD)("div",null,"hello!")}const t=(0,c.aZ)({name:"PageIndex"});var f=a(74260);const i=(0,f.Z)(t,[["render",r]]),o=i}}]);
